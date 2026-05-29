@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon.de Mobile Mockup Generator</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f0f0;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:24px}
+  .wrap{display:grid;grid-template-columns:1fr 1px 1fr;background:#fff;border-radius:16px;border:1px solid #ddd;overflow:hidden;max-width:900px;width:100%}
+  .divider{background:#e0e0e0}
+  .panel{padding:24px}
+  .panel-title{font-size:11px;font-weight:600;color:#888;letter-spacing:.07em;text-transform:uppercase;margin-bottom:14px}
+  .lbl{font-size:13px;font-weight:500;color:#333;display:block;margin-bottom:6px}
+  .title-input{width:100%;padding:9px 11px;font-size:13px;border:1px solid #ddd;border-radius:8px;background:#fff;color:#111;resize:none;font-family:inherit;line-height:1.5}
+  .title-input:focus{outline:none;border-color:#999}
+  .sublbl{font-size:12px;color:#888;margin:14px 0 8px}
+  .slot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+  .slot{aspect-ratio:1;border:1px dashed #ccc;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden;background:#fafafa;transition:border-color .15s}
+  .slot:hover{border-color:#999}
+  .slot.has-img{border-style:solid;border-color:#ccc}
+  .slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:7px}
+  .slot-num{font-size:11px;color:#aaa;font-weight:500;position:relative;z-index:1}
+  .slot-icon{font-size:18px;color:#bbb;margin-bottom:3px;position:relative;z-index:1}
+  .slot-remove{position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:3;cursor:pointer;border:none}
+  .slot.has-img .slot-remove{display:flex}
+  .slot-remove i{font-size:10px;color:#fff}
+  .main-badge{position:absolute;bottom:3px;left:3px;font-size:9px;font-weight:500;background:rgba(255,153,0,.9);color:#111;padding:2px 5px;border-radius:3px;z-index:2}
+  .hint{font-size:11px;color:#aaa;margin-top:12px;line-height:1.5}
+
+  .phone-wrap{display:flex;justify-content:center;align-items:flex-start;padding:24px 16px;background:#e8e8e8}
+  .phone{width:230px;background:#111;border-radius:40px;padding:10px;border:1px solid #333}
+  .screen{background:#fff;border-radius:32px;overflow:hidden}
+
+  .status-bar{background:#fff;height:24px;display:flex;align-items:center;justify-content:space-between;padding:0 14px}
+  .status-time{font-size:10px;font-weight:700;color:#111}
+  .status-icons{display:flex;align-items:center;gap:3px}
+  .status-icons i{font-size:11px;color:#111}
+
+  .amz-topbar{background:#fff;padding:5px 8px;border-bottom:1px solid #e7e7e7;display:flex;align-items:center;justify-content:space-between;gap:6px}
+  .top-icons{display:flex;align-items:center;gap:8px}
+  .top-icons i{font-size:15px;color:#111}
+  .cart-wrap{position:relative}
+  .cart-ct{position:absolute;top:-4px;right:-5px;background:#f90;width:12px;height:12px;border-radius:50%;font-size:7px;font-weight:700;color:#111;display:flex;align-items:center;justify-content:center}
+
+  .search-row{background:#f3f3f3;margin:5px 8px;border-radius:6px;display:flex;align-items:center;padding:5px 8px;gap:5px;border:1px solid #ddd}
+  .search-row i{font-size:12px;color:#888}
+  .search-txt{font-size:9px;color:#555;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+  .deliver-bar{background:#232f3e;padding:4px 8px;display:flex;align-items:center;gap:4px}
+  .deliver-bar i{font-size:10px;color:#ccc}
+  .deliver-txt{font-size:9px;color:#fff}
+  .deliver-txt span{font-weight:700;color:#f0c040}
+
+  .store-row{padding:6px 8px 2px;display:flex;align-items:center;justify-content:space-between}
+  .store-link{font-size:9px;color:#007185;font-weight:500}
+  .rating-block{display:flex;align-items:center;gap:3px}
+  .stars{font-size:9px;color:#e77600;letter-spacing:-0.5px}
+  .review-ct{font-size:9px;color:#007185}
+
+  .prod-title-area{padding:2px 8px 5px;font-size:9px;font-weight:600;color:#0f1111;line-height:1.4;word-break:break-word}
+
+  .carousel-area{position:relative;background:#fff;overflow:hidden;border-top:1px solid #f0f0f0}
+  .carousel-track{display:flex;transition:transform .3s ease;cursor:grab;user-select:none}
+  .carousel-track.dragging{transition:none;cursor:grabbing}
+  .carousel-slide{min-width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:#fff}
+  .carousel-slide img{width:100%;height:100%;object-fit:contain}
+  .empty-slide{display:flex;flex-direction:column;align-items:center;gap:6px;color:#ccc}
+  .empty-slide i{font-size:26px}
+  .empty-slide span{font-size:9px}
+
+  .below-carousel{background:#fff;padding:6px 8px 4px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #f0f0f0}
+  .dots-row{display:flex;align-items:center;gap:4px}
+  .dot{width:5px;height:5px;border-radius:50%;background:#ddd;transition:all .2s;cursor:pointer}
+  .dot.active{background:#111}
+  .action-icons{display:flex;align-items:center;gap:10px}
+  .action-icons i{font-size:16px;color:#555}
+
+  .safety-block{margin:0 8px 8px;background:#fff;border:1px solid #e0e0e0;border-radius:6px;padding:7px 8px}
+  .safety-title{font-size:9px;font-weight:700;color:#0f1111;margin-bottom:4px}
+  .safety-link{font-size:8px;color:#007185;display:flex;align-items:center;gap:3px}
+  .bullet{color:#007185;margin-right:2px}
+
+  .nav-bar{background:#fff;border-top:1px solid #e0e0e0;display:flex;align-items:center;justify-content:space-around;padding:5px 0;border-radius:0 0 32px 32px}
+  .nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
+  .nav-item i{font-size:14px;color:#555}
+  .nav-label{font-size:7px;color:#555}
+  .nav-item.active i,.nav-item.active .nav-label{color:#f90}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="panel">
+    <p class="panel-title">Controls</p>
+    <label class="lbl">Product title</label>
+    <textarea class="title-input" id="titleInput" rows="3" placeholder="e.g. Sportstech 2-in-1 Vibration Plate 3D Massage…"></textarea>
+    <p class="sublbl">Images — click to upload (slot 1 = main image)</p>
+    <div class="slot-grid" id="slotGrid"></div>
+    <p class="hint">&#9432; Drag left/right on the phone image to swipe through slides.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="screen">
+
+        <div class="status-bar">
+          <span class="status-time">3:27</span>
+          <div class="status-icons">
+            <i class="ti ti-wifi"></i>
+            <i class="ti ti-signal-3g"></i>
+            <i class="ti ti-battery-2"></i>
+          </div>
+        </div>
+
+        <div class="amz-topbar">
+          <i class="ti ti-menu-2" style="font-size:15px;color:#111"></i>
+          <div style="display:flex;align-items:baseline;gap:1px">
+            <span style="font-size:15px;font-weight:900;color:#111;font-family:serif;letter-spacing:-1px">amazon</span>
+            <span style="font-size:8px;color:#f90;font-weight:900;vertical-align:super">.de</span>
+          </div>
+          <div class="top-icons">
+            <i class="ti ti-user"></i>
+            <div class="cart-wrap">
+              <i class="ti ti-shopping-cart"></i>
+              <span class="cart-ct">0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="search-row">
+          <i class="ti ti-search"></i>
+          <span class="search-txt" id="searchTxt">vx350 vibrationsplatte</span>
+          <i class="ti ti-microphone"></i>
+        </div>
+
+        <div class="deliver-bar">
+          <i class="ti ti-map-pin"></i>
+          <span class="deliver-txt">Deliver to <span>India</span></span>
+          <i class="ti ti-chevron-down" style="font-size:10px;color:#ccc;margin-left:2px"></i>
+        </div>
+
+        <div class="store-row">
+          <span class="store-link">Visit the Sportstech Store</span>
+          <div class="rating-block">
+            <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+            <span class="review-ct">(247)</span>
+          </div>
+        </div>
+
+        <div class="prod-title-area" id="previewTitle">Sportstech 2-in-1 Vibration Plate 3D Massage &amp; Fitness at Home | Massager with Heat Against Cold Feet | VX350</div>
+
+        <div class="carousel-area" id="carouselArea">
+          <div class="carousel-track" id="carouselTrack"></div>
+        </div>
+
+        <div class="below-carousel">
+          <div class="dots-row" id="dotsRow"></div>
+          <div class="action-icons">
+            <i class="ti ti-heart"></i>
+            <i class="ti ti-share"></i>
+          </div>
+        </div>
+
+        <div class="safety-block">
+          <p class="safety-title">Safety and product resources</p>
+          <p class="safety-link"><span class="bullet">&#8226;</span><i class="ti ti-recycle"></i> Want to recycle your product FREE of charge?</p>
+        </div>
+
+        <div class="nav-bar">
+          <div class="nav-item active"><i class="ti ti-home"></i><span class="nav-label">Home</span></div>
+          <div class="nav-item"><i class="ti ti-search"></i><span class="nav-label">Search</span></div>
+          <div class="nav-item"><i class="ti ti-shopping-cart"></i><span class="nav-label">Cart</span></div>
+          <div class="nav-item"><i class="ti ti-list"></i><span class="nav-label">Orders</span></div>
+          <div class="nav-item"><i class="ti ti-user"></i><span class="nav-label">Account</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SLOTS = 9;
+const images = new Array(SLOTS).fill(null);
+let cur = 0;
+
+const slotGrid = document.getElementById('slotGrid');
+const carouselTrack = document.getElementById('carouselTrack');
+const dotsRow = document.getElementById('dotsRow');
+const previewTitle = document.getElementById('previewTitle');
+const titleInput = document.getElementById('titleInput');
+const carouselArea = document.getElementById('carouselArea');
+const searchTxt = document.getElementById('searchTxt');
+
+function buildSlots() {
+  slotGrid.innerHTML = '';
+  for (let i = 0; i < SLOTS; i++) {
+    const s = document.createElement('div');
+    s.className = 'slot' + (images[i] ? ' has-img' : '');
+    if (images[i]) {
+      const im = document.createElement('img'); im.src = images[i]; s.appendChild(im);
+      if (i === 0) {
+        const b = document.createElement('span'); b.className = 'main-badge'; b.textContent = 'Main'; s.appendChild(b);
+      }
+      const rm = document.createElement('button'); rm.className = 'slot-remove';
+      rm.innerHTML = '<i class="ti ti-x"></i>';
+      rm.onclick = e => { e.stopPropagation(); images[i] = null; buildSlots(); buildCarousel(); };
+      s.appendChild(rm);
+    } else {
+      const ic = document.createElement('i'); ic.className = 'ti ti-plus slot-icon';
+      const n = document.createElement('span'); n.className = 'slot-num'; n.textContent = 'Slot ' + (i + 1);
+      s.appendChild(ic); s.appendChild(n);
+    }
+    s.addEventListener('click', () => triggerUpload(i));
+    s.addEventListener('dragover', e => { e.preventDefault(); s.style.borderColor = '#666'; });
+    s.addEventListener('dragleave', () => { s.style.borderColor = ''; });
+    s.addEventListener('drop', e => { e.preventDefault(); s.style.borderColor = ''; handleFile(i, e.dataTransfer.files[0]); });
+    slotGrid.appendChild(s);
+  }
+}
+
+function triggerUpload(i) {
+  const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*';
+  inp.onchange = () => { if (inp.files[0]) handleFile(i, inp.files[0]); };
+  inp.click();
+}
+
+function handleFile(i, file) {
+  if (!file || !file.type.startsWith('image/')) return;
+  const r = new FileReader();
+  r.onload = e => {
+    images[i] = e.target.result;
+    buildSlots();
+    buildCarousel();
+    if (i === 0) { searchTxt.textContent = titleInput.value.trim() || 'vx350 vibrationsplatte'; }
+  };
+  r.readAsDataURL(file);
+}
+
+function buildCarousel() {
+  carouselTrack.innerHTML = ''; dotsRow.innerHTML = '';
+  const filled = images.filter(Boolean);
+  if (!filled.length) {
+    const sl = document.createElement('div'); sl.className = 'carousel-slide';
+    sl.innerHTML = '<div class="empty-slide"><i class="ti ti-photo"></i><span>Upload images</span></div>';
+    carouselTrack.appendChild(sl);
+    const d = document.createElement('div'); d.className = 'dot active'; dotsRow.appendChild(d);
+    return;
+  }
+  filled.forEach((src, idx) => {
+    const sl = document.createElement('div'); sl.className = 'carousel-slide';
+    const im = document.createElement('img'); im.src = src; im.alt = 'Product image ' + (idx + 1);
+    sl.appendChild(im); carouselTrack.appendChild(sl);
+    const d = document.createElement('div'); d.className = 'dot' + (idx === cur ? ' active' : '');
+    d.onclick = () => goTo(idx); dotsRow.appendChild(d);
+  });
+  if (cur >= filled.length) cur = 0;
+  updateCarousel();
+}
+
+function goTo(idx) {
+  const filled = images.filter(Boolean);
+  cur = Math.max(0, Math.min(idx, filled.length - 1));
+  updateCarousel();
+}
+
+function updateCarousel() {
+  carouselTrack.style.transform = 'translateX(-' + (cur * 100) + '%)';
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === cur));
+}
+
+let dragX = null;
+carouselArea.addEventListener('mousedown', e => { dragX = e.clientX; carouselTrack.classList.add('dragging'); });
+window.addEventListener('mousemove', e => {
+  if (dragX === null) return;
+  carouselTrack.style.transform = 'translateX(calc(-' + (cur * 100) + '% + ' + (e.clientX - dragX) + 'px))';
+});
+window.addEventListener('mouseup', e => {
+  if (dragX === null) return;
+  const diff = e.clientX - dragX;
+  carouselTrack.classList.remove('dragging');
+  const filled = images.filter(Boolean);
+  if (diff < -40 && cur < filled.length - 1) cur++;
+  else if (diff > 40 && cur > 0) cur--;
+  dragX = null;
+  updateCarousel();
+});
+
+let tX = null;
+carouselArea.addEventListener('touchstart', e => { tX = e.touches[0].clientX; }, { passive: true });
+carouselArea.addEventListener('touchend', e => {
+  if (tX === null) return;
+  const diff = e.changedTouches[0].clientX - tX;
+  const filled = images.filter(Boolean);
+  if (diff < -40 && cur < filled.length - 1) cur++;
+  else if (diff > 40 && cur > 0) cur--;
+  tX = null;
+  updateCarousel();
+}, { passive: true });
+
+titleInput.addEventListener('input', () => {
+  const v = titleInput.value.trim();
+  previewTitle.textContent = v || 'Your product title will appear here.';
+  searchTxt.textContent = v || 'vx350 vibrationsplatte';
+});
+
+buildSlots();
+buildCarousel();
+</script>
+
+</body>
+</html>
