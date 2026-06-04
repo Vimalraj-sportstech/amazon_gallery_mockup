@@ -3,228 +3,2636 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Amazon.de Mobile Mockup Generator</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<title>Sportstech Amazon Mockup Viewer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f0f0;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:24px}
-  .wrap{display:grid;grid-template-columns:1fr 1px 1fr;background:#fff;border-radius:16px;border:1px solid #ddd;overflow:hidden;max-width:900px;width:100%}
-  .divider{background:#e0e0e0}
-  .panel{padding:24px}
-  .panel-title{font-size:11px;font-weight:600;color:#888;letter-spacing:.07em;text-transform:uppercase;margin-bottom:14px}
-  .lbl{font-size:13px;font-weight:500;color:#333;display:block;margin-bottom:6px}
-  .title-input{width:100%;padding:9px 11px;font-size:13px;border:1px solid #ddd;border-radius:8px;background:#fff;color:#111;resize:none;font-family:inherit;line-height:1.5}
-  .title-input:focus{outline:none;border-color:#999}
-  .sublbl{font-size:12px;color:#888;margin:14px 0 8px}
-  .slot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-  .slot{aspect-ratio:1;border:1px dashed #ccc;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden;background:#fafafa;transition:border-color .15s}
-  .slot:hover{border-color:#999}
-  .slot.has-img{border-style:solid;border-color:#ccc}
-  .slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:7px}
-  .slot-num{font-size:11px;color:#aaa;font-weight:500;position:relative;z-index:1}
-  .slot-icon{font-size:18px;color:#bbb;margin-bottom:3px;position:relative;z-index:1}
-  .slot-remove{position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:3;cursor:pointer;border:none}
-  .slot.has-img .slot-remove{display:flex}
-  .slot-remove i{font-size:10px;color:#fff}
-  .main-badge{position:absolute;bottom:3px;left:3px;font-size:9px;font-weight:500;background:rgba(255,153,0,.9);color:#111;padding:2px 5px;border-radius:3px;z-index:2}
-  .hint{font-size:11px;color:#aaa;margin-top:12px;line-height:1.5}
+/* ── RESET ──────────────────────────────────────────────────────── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-  .phone-wrap{display:flex;justify-content:center;align-items:flex-start;padding:24px 16px;background:#e8e8e8}
-  .phone{width:230px;background:#111;border-radius:40px;padding:10px;border:1px solid #333}
-  .screen{background:#fff;border-radius:32px;overflow:hidden}
+:root {
+  --bg:         #0e0f11;
+  --surface:    #16181c;
+  --surface2:   #1d2026;
+  --border:     #2a2d34;
+  --border2:    #353940;
+  --text-1:     #f0f1f3;
+  --text-2:     #8b909a;
+  --text-3:     #555b66;
+  --accent:     #e8001c;
+  --accent-dim: rgba(232,0,28,.12);
+  --accent-glow:rgba(232,0,28,.28);
+  --blue:       #3b82f6;
+  --blue-dim:   rgba(59,130,246,.12);
+  --radius:     10px;
+  --radius-sm:  6px;
+  --font:       'DM Sans', sans-serif;
+  --font-mono:  'DM Mono', monospace;
+}
 
-  .status-bar{background:#fff;height:24px;display:flex;align-items:center;justify-content:space-between;padding:0 14px}
-  .status-time{font-size:10px;font-weight:700;color:#111}
-  .status-icons{display:flex;align-items:center;gap:3px}
-  .status-icons i{font-size:11px;color:#111}
+html, body { height: 100%; overflow: hidden; }
 
-  .amz-topbar{background:#fff;padding:5px 8px;border-bottom:1px solid #e7e7e7;display:flex;align-items:center;justify-content:space-between;gap:6px}
-  .top-icons{display:flex;align-items:center;gap:8px}
-  .top-icons i{font-size:15px;color:#111}
-  .cart-wrap{position:relative}
-  .cart-ct{position:absolute;top:-4px;right:-5px;background:#f90;width:12px;height:12px;border-radius:50%;font-size:7px;font-weight:700;color:#111;display:flex;align-items:center;justify-content:center}
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text-1);
+  display: flex;
+  flex-direction: column;
+}
 
-  .search-row{background:#f3f3f3;margin:5px 8px;border-radius:6px;display:flex;align-items:center;padding:5px 8px;gap:5px;border:1px solid #ddd}
-  .search-row i{font-size:12px;color:#888}
-  .search-txt{font-size:9px;color:#555;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* ── APP HEADER ─────────────────────────────────────────────────── */
+.app-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  z-index: 10;
+}
 
-  .deliver-bar{background:#232f3e;padding:4px 8px;display:flex;align-items:center;gap:4px}
-  .deliver-bar i{font-size:10px;color:#ccc}
-  .deliver-txt{font-size:9px;color:#fff}
-  .deliver-txt span{font-weight:700;color:#f0c040}
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-  .store-row{padding:6px 8px 2px;display:flex;align-items:center;justify-content:space-between}
-  .store-link{font-size:9px;color:#007185;font-weight:500}
-  .rating-block{display:flex;align-items:center;gap:3px}
-  .stars{font-size:9px;color:#e77600;letter-spacing:-0.5px}
-  .review-ct{font-size:9px;color:#007185}
+.header-logo {
+  width: 28px;
+  height: 28px;
+  background: var(--accent);
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 900;
+  color: #111;
+  font-family: Georgia, serif;
+  flex-shrink: 0;
+}
 
-  .prod-title-area{padding:2px 8px 5px;font-size:9px;font-weight:600;color:#0f1111;line-height:1.4;word-break:break-word}
+.header-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-1);
+  letter-spacing: .01em;
+}
 
-  .carousel-area{position:relative;background:#fff;overflow:hidden;border-top:1px solid #f0f0f0}
-  .carousel-track{display:flex;transition:transform .3s ease;cursor:grab;user-select:none}
-  .carousel-track.dragging{transition:none;cursor:grabbing}
-  .carousel-slide{min-width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:#fff}
-  .carousel-slide img{width:100%;height:100%;object-fit:contain}
-  .empty-slide{display:flex;flex-direction:column;align-items:center;gap:6px;color:#ccc}
-  .empty-slide i{font-size:26px}
-  .empty-slide span{font-size:9px}
+.header-subtitle {
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 1px;
+}
 
-  .below-carousel{background:#fff;padding:6px 8px 4px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #f0f0f0}
-  .dots-row{display:flex;align-items:center;gap:4px}
-  .dot{width:5px;height:5px;border-radius:50%;background:#ddd;transition:all .2s;cursor:pointer}
-  .dot.active{background:#111}
-  .action-icons{display:flex;align-items:center;gap:10px}
-  .action-icons i{font-size:16px;color:#555}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-  .safety-block{margin:0 8px 8px;background:#fff;border:1px solid #e0e0e0;border-radius:6px;padding:7px 8px}
-  .safety-title{font-size:9px;font-weight:700;color:#0f1111;margin-bottom:4px}
-  .safety-link{font-size:8px;color:#007185;display:flex;align-items:center;gap:3px}
-  .bullet{color:#007185;margin-right:2px}
+.header-badge {
+  font-size: 10px;
+  font-weight: 600;
+  background: var(--accent-dim);
+  color: var(--accent);
+  border: 1px solid rgba(232,0,28,.3);
+  border-radius: 20px;
+  padding: 3px 9px;
+  letter-spacing: .04em;
+}
 
-  .nav-bar{background:#fff;border-top:1px solid #e0e0e0;display:flex;align-items:center;justify-content:space-around;padding:5px 0;border-radius:0 0 32px 32px}
-  .nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
-  .nav-item i{font-size:14px;color:#555}
-  .nav-label{font-size:7px;color:#555}
-  .nav-item.active i,.nav-item.active .nav-label{color:#f90}
+/* ── MAIN LAYOUT ────────────────────────────────────────────────── */
+.app-body {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ── SIDEBAR ────────────────────────────────────────────────────── */
+.sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border2) transparent;
+}
+.sidebar-scroll::-webkit-scrollbar { width: 4px; }
+.sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+.sidebar-scroll::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+/* ── SECTION ────────────────────────────────────────────────────── */
+.section { margin-bottom: 24px; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.section-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.section-icon i { font-size: 13px; color: var(--text-2); }
+.section-icon.accent { background: var(--accent-dim); border-color: rgba(232,0,28,.25); }
+.section-icon.accent i { color: var(--accent); }
+.section-icon.blue { background: var(--blue-dim); border-color: rgba(59,130,246,.2); }
+.section-icon.blue i { color: var(--blue); }
+.section-icon.green { background: rgba(34,197,94,.1); border-color: rgba(34,197,94,.2); }
+.section-icon.green i { color: #22c55e; }
+
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-2);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  flex: 1;
+}
+
+.section-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0 -20px 20px;
+}
+
+/* ── WARNING BADGE ──────────────────────────────────────────────── */
+.warning-badge {
+  display: none;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  background: rgba(234,179,8,.1);
+  color: #eab308;
+  border: 1px solid rgba(234,179,8,.25);
+  border-radius: 20px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+.warning-badge.visible { display: flex; }
+.warning-badge i { font-size: 10px; }
+
+/* ── FORM ELEMENTS ──────────────────────────────────────────────── */
+.field { margin-bottom: 12px; }
+
+.field-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-2);
+  display: block;
+  margin-bottom: 5px;
+}
+
+.field-input,
+.field-textarea {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-1);
+  font-family: var(--font);
+  font-size: 13px;
+  line-height: 1.5;
+  padding: 8px 10px;
+  transition: border-color .15s;
+  outline: none;
+  resize: none;
+}
+.field-input:focus,
+.field-textarea:focus { border-color: var(--border2); background: #1f2229; }
+.field-input::placeholder,
+.field-textarea::placeholder { color: var(--text-3); }
+
+/* ── BULLETS EDITOR ─────────────────────────────────────────────── */
+.bullets-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+.bullet-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.bullet-row input {
+  flex: 1;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-1);
+  font-family: var(--font);
+  font-size: 12px;
+  padding: 6px 9px;
+  outline: none;
+  transition: border-color .15s;
+}
+.bullet-row input:focus { border-color: var(--border2); }
+.bullet-row input::placeholder { color: var(--text-3); }
+.bullet-del {
+  width: 22px; height: 22px;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-3);
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 4px;
+  transition: color .15s, background .15s;
+}
+.bullet-del:hover { color: var(--text-1); background: var(--border); }
+.bullet-del i { font-size: 12px; }
+
+.btn-add-bullet {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 500;
+  color: var(--text-3);
+  background: none; border: none; cursor: pointer;
+  padding: 4px 0;
+  transition: color .15s;
+}
+.btn-add-bullet:hover { color: var(--text-2); }
+.btn-add-bullet i { font-size: 12px; }
+
+/* ── IMAGE SLOTS ────────────────────────────────────────────────── */
+.slots-hint {
+  font-size: 11px;
+  color: var(--text-3);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.slots-hint i { font-size: 12px; }
+
+.slot-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.slot {
+  aspect-ratio: 1;
+  background: var(--surface2);
+  border: 1px dashed var(--border2);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .15s, background .15s;
+}
+.slot:hover { border-color: var(--border); background: #22262e; }
+.slot.has-img { border-style: solid; border-color: var(--border2); }
+
+.slot img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: calc(var(--radius-sm) - 1px);
+}
+
+.slot-num {
+  font-size: 10px;
+  color: var(--text-3);
+  font-weight: 500;
+  font-family: var(--font-mono);
+  position: relative;
+  z-index: 1;
+  margin-top: 3px;
+}
+
+.slot-icon {
+  font-size: 16px;
+  color: var(--text-3);
+  position: relative;
+  z-index: 1;
+}
+
+.slot-remove {
+  position: absolute;
+  top: 3px; right: 3px;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: rgba(0,0,0,.65);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  cursor: pointer;
+  border: none;
+}
+.slot.has-img .slot-remove { display: flex; }
+.slot-remove i { font-size: 9px; color: #fff; }
+
+.main-badge {
+  position: absolute;
+  bottom: 3px; left: 3px;
+  font-size: 8px;
+  font-weight: 700;
+  background: var(--accent);
+  color: #fff;
+  padding: 2px 5px;
+  border-radius: 4px;
+  z-index: 2;
+  font-family: var(--font-mono);
+  letter-spacing: .04em;
+}
+
+.drag-handle {
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 16px; height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+  opacity: 0;
+  transition: opacity .15s;
+  pointer-events: none;
+}
+.slot.has-img:hover .drag-handle { opacity: 1; }
+.drag-handle i { font-size: 10px; color: #fff; filter: drop-shadow(0 1px 2px rgba(0,0,0,.8)); }
+.slot[draggable="true"] { cursor: grab; }
+.slot.drag-over { border-color: var(--accent) !important; border-style: solid !important; background: var(--accent-dim) !important; }
+.slot.dragging-src { opacity: .3; transform: scale(.94); transition: opacity .15s, transform .15s; }
+
+/* ── HINT ───────────────────────────────────────────────────────── */
+.hint {
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 10px;
+  line-height: 1.6;
+  display: flex;
+  gap: 5px;
+}
+.hint i { font-size: 12px; flex-shrink: 0; margin-top: 1px; }
+
+/* ── A+ UPLOAD SLOT (4:3 ratio) ────────────────────────────────── */
+.aplus-upload-zone {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--surface2);
+  border: 1px dashed var(--border2);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+  margin-bottom: 10px;
+}
+.aplus-upload-zone:hover { border-color: var(--border); background: #22262e; }
+.aplus-upload-zone i { font-size: 18px; color: var(--text-3); }
+.aplus-upload-zone span { font-size: 11px; color: var(--text-3); }
+
+/* ── A+ UPLOAD SLOT (97:30 ratio) ───────────────────────────────── */
+.aplus-upload-zone-wide {
+  width: 100%;
+  aspect-ratio: 97 / 30;
+  background: var(--surface2);
+  border: 1px dashed var(--border2);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+  margin-bottom: 10px;
+}
+.aplus-upload-zone-wide:hover { border-color: var(--border); background: #22262e; }
+.aplus-upload-zone-wide i { font-size: 18px; color: var(--text-3); }
+.aplus-upload-zone-wide span { font-size: 11px; color: var(--text-3); }
+
+/* ── A+ LIST IN SIDEBAR ─────────────────────────────────────────── */
+.aplus-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.aplus-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 8px;
+}
+
+/* 4:3 thumbnail */
+.aplus-item-thumb {
+  width: 64px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000;
+}
+/* 97:30 thumbnail */
+.aplus-item-thumb-wide {
+  width: 80px;
+  height: 25px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000;
+}
+.aplus-item-thumb img,
+.aplus-item-thumb-wide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.aplus-item-name {
+  flex: 1;
+  font-size: 11px;
+  color: var(--text-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+}
+
+.aplus-item button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-3);
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  border-radius: 4px;
+  transition: color .15s, background .15s;
+}
+.aplus-item button:hover { color: var(--text-1); background: var(--border); }
+.aplus-item button i { font-size: 12px; }
+
+/* ── VIEW TOGGLE ────────────────────────────────────────────────── */
+.view-toggle {
+  display: flex;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 3px;
+  gap: 2px;
+}
+.view-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-3);
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+.view-btn i { font-size: 13px; }
+.view-btn.active {
+  background: var(--border2);
+  color: var(--text-1);
+}
+
+/* ── BUTTONS ────────────────────────────────────────────────────── */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 100%;
+  padding: 9px 13px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  letter-spacing: .02em;
+  transition: filter .15s, transform .1s;
+}
+.btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.btn:active { transform: translateY(0); filter: brightness(.95); }
+.btn i { font-size: 14px; }
+
+.btn-orange {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 10px var(--accent-glow);
+}
+
+/* ── PREVIEW AREA ───────────────────────────────────────────────── */
+.preview-area {
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.preview-toolbar {
+  height: 48px;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  background: var(--surface);
+}
+
+.preview-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-2);
+  font-weight: 500;
+}
+.preview-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+}
+
+.zoom-controls { display: flex; align-items: center; gap: 4px; }
+
+.zoom-btn {
+  width: 28px; height: 28px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  transition: background .15s, color .15s;
+}
+.zoom-btn:hover { background: var(--border); color: var(--text-1); }
+
+.zoom-val {
+  font-size: 11px;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  width: 36px;
+  text-align: center;
+}
+
+.preview-canvas {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 32px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border2) transparent;
+  background: var(--bg);
+}
+.preview-canvas::-webkit-scrollbar { width: 6px; height: 6px; }
+.preview-canvas::-webkit-scrollbar-track { background: transparent; }
+.preview-canvas::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+.phone-scaler {
+  transform-origin: top center;
+  transition: transform .2s;
+}
+
+/* ── PHONE FRAME ────────────────────────────────────────────────── */
+.phone {
+  position: relative;
+  width: 390px;
+  height: 844px;
+  background: #090909;
+  border-radius: 54px;
+  padding: 14px;
+  border: 1.5px solid #252525;
+  box-shadow:
+    0 0 0 1px #0d0d0d,
+    0 40px 100px rgba(0,0,0,.8),
+    0 10px 30px rgba(0,0,0,.5),
+    inset 0 0 0 1px #2e2e2e;
+  flex-shrink: 0;
+}
+
+.phone::before {
+  content: '';
+  position: absolute;
+  left: -3px; top: 120px;
+  width: 3px; height: 36px;
+  background: #1c1c1c;
+  border-radius: 3px 0 0 3px;
+  box-shadow: 0 50px 0 #1c1c1c, 0 100px 0 #1c1c1c;
+}
+.phone::after {
+  content: '';
+  position: absolute;
+  right: -3px; top: 160px;
+  width: 3px; height: 68px;
+  background: #1c1c1c;
+  border-radius: 0 3px 3px 0;
+}
+
+.phone-notch {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px; height: 30px;
+  background: #090909;
+  border-radius: 0 0 20px 20px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.notch-cam {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #161616;
+  border: 1px solid #252525;
+  box-shadow: inset 0 0 3px rgba(100,160,255,.3);
+}
+.notch-speaker {
+  width: 46px; height: 5px;
+  border-radius: 3px;
+  background: #161616;
+}
+
+/* ── SCREEN ─────────────────────────────────────────────────────── */
+.screen {
+  background: #fff;
+  border-radius: 40px;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.screen-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+.screen-scroll::-webkit-scrollbar { display: none; }
+
+/* ── STATUS BAR ─────────────────────────────────────────────────── */
+.status-bar {
+  background: #fff;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  border-radius: 32px 32px 0 0;
+  flex-shrink: 0;
+}
+.status-time { font-size: 10px; font-weight: 700; color: #111; }
+.status-icons { display: flex; align-items: center; gap: 3px; }
+.status-icons i { font-size: 11px; color: #111; }
+
+/* ── AMZ TOP BAR ────────────────────────────────────────────────── */
+.amz-topbar {
+  background: #fff;
+  padding: 5px 8px;
+  border-bottom: 1px solid #e7e7e7;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.top-icons { display: flex; align-items: center; gap: 8px; }
+.top-icons i { font-size: 15px; color: #111; }
+.cart-wrap { position: relative; }
+.cart-ct {
+  position: absolute;
+  top: -4px; right: -5px;
+  background: #f90;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  font-size: 7px;
+  font-weight: 700;
+  color: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── SEARCH ROW ─────────────────────────────────────────────────── */
+.search-row {
+  background: #f3f3f3;
+  margin: 5px 8px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding: 5px 8px;
+  gap: 5px;
+  border: .5px solid #ddd;
+}
+.search-row i { font-size: 12px; color: #888; }
+.search-txt {
+  font-size: 9px;
+  color: #555;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── DELIVER BAR ────────────────────────────────────────────────── */
+.deliver-bar {
+  background: #232f3e;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.deliver-bar i { font-size: 10px; color: #ccc; }
+.deliver-txt { font-size: 9px; color: #fff; }
+.deliver-txt span { font-weight: 700; color: #f0c040; }
+
+/* ── STORE / RATING / TITLE ─────────────────────────────────────── */
+.store-row {
+  padding: 6px 8px 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.store-link { font-size: 9px; color: #007185; font-weight: 500; }
+.rating-block { display: flex; align-items: center; gap: 3px; }
+.stars { font-size: 9px; color: #e77600; letter-spacing: -.5px; }
+.review-ct { font-size: 9px; color: #007185; }
+
+.prod-title-area {
+  padding: 2px 8px 5px;
+  font-size: 9px;
+  font-weight: 600;
+  color: #0f1111;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* ── CAROUSEL ───────────────────────────────────────────────────── */
+.carousel-area {
+  position: relative;
+  background: #fff;
+  overflow: hidden;
+  border-top: .5px solid #f0f0f0;
+  aspect-ratio: 1;
+  flex-shrink: 0;
+}
+
+.carousel-track {
+  display: flex;
+  height: 100%;
+  transition: transform .3s ease;
+  cursor: grab;
+  user-select: none;
+}
+.carousel-track.dragging { transition: none; cursor: grabbing; }
+
+.carousel-slide {
+  min-width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  padding: 18px;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.empty-slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: #ccc;
+}
+.empty-slide i { font-size: 26px; }
+.empty-slide span { font-size: 9px; }
+
+/* ── BELOW CAROUSEL ─────────────────────────────────────────────── */
+.below-carousel {
+  background: #fff;
+  padding: 6px 8px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: .5px solid #f0f0f0;
+  flex-shrink: 0;
+}
+.dots-row { display: flex; align-items: center; gap: 4px; }
+.dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #ddd;
+  transition: all .2s;
+  cursor: pointer;
+}
+.dot.active { background: #111; }
+.action-icons { display: flex; align-items: center; gap: 10px; }
+.action-icons i { font-size: 16px; color: #555; }
+
+/* ── SAFETY BLOCK ───────────────────────────────────────────────── */
+.safety-block {
+  margin: 0 8px 8px;
+  background: #fff;
+  border: .5px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 7px 8px;
+  flex-shrink: 0;
+}
+.safety-title { font-size: 9px; font-weight: 700; color: #0f1111; margin-bottom: 4px; }
+.safety-link { font-size: 8px; color: #007185; display: flex; align-items: center; gap: 3px; }
+.safety-link i { font-size: 10px; }
+.bullet-amz { color: #007185; margin-right: 2px; }
+
+/* ── NAV BAR ────────────────────────────────────────────────────── */
+.nav-bar {
+  background: #fff;
+  border-top: .5px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 5px 0;
+  border-radius: 0 0 40px 40px;
+  flex-shrink: 0;
+}
+.nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; }
+.nav-item i { font-size: 14px; color: #555; }
+.nav-label { font-size: 7px; color: #555; }
+.nav-item.active i, .nav-item.active .nav-label { color: #f90; }
+
+/* ── A+ IN PHONE ────────────────────────────────────────────────── */
+.aplus-divider { border: none; border-top: 1px solid #e0e0e0; margin: 0; }
+.aplus-section-header {
+  padding: 8px 8px 4px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #0f1111;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  background: #fafafa;
+  border-top: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
+  flex-shrink: 0;
+}
+
+#aplusSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+  font-size: 0;
+}
+
+.aplus-module {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #f5f5f5;
+  overflow: hidden;
+  display: block;
+  line-height: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+  margin-top: -1px;
+}
+.aplus-module:first-child { margin-top: 0; }
+
+.aplus-module img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.aplus-module-remove {
+  position: absolute;
+  top: 4px; right: 4px;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: rgba(0,0,0,.55);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity .15s;
+}
+.aplus-module:hover .aplus-module-remove { opacity: 1; }
+.aplus-module-remove i { font-size: 9px; color: #fff; }
+
+.aplus-empty {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: #ccc;
+  background: #fafafa;
+  font-size: 12px;
+  line-height: normal;
+}
+.aplus-empty i { font-size: 18px; }
+.aplus-empty span { font-size: 8px; }
+
+/* ════════════════════════════════════════════════════════════════
+   DESKTOP BROWSER FRAME
+   ════════════════════════════════════════════════════════════════ */
+.browser-frame {
+  display: none;
+  width: 1100px;
+  min-height: 820px;
+  background: #f5f5f5;
+  border-radius: 12px;
+  box-shadow:
+    0 0 0 1px #1a1a1a,
+    0 40px 120px rgba(0,0,0,.85),
+    0 10px 30px rgba(0,0,0,.5);
+  overflow: hidden;
+  flex-shrink: 0;
+  flex-direction: column;
+}
+
+/* Tab strip */
+.browser-tabs {
+  background: #2a2a2a;
+  display: flex;
+  align-items: flex-end;
+  padding: 6px 6px 0;
+  gap: 2px;
+  border-radius: 12px 12px 0 0;
+}
+.browser-tab {
+  background: #3d3d3d;
+  border-radius: 8px 8px 0 0;
+  padding: 5px 14px;
+  font-size: 11px;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 200px;
+  overflow: hidden;
+}
+.browser-tab.active {
+  background: #ffffff;
+  color: #333;
+}
+.browser-tab-favicon {
+  width: 12px; height: 12px;
+  border-radius: 2px;
+  background: #f90;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7px;
+  font-weight: 900;
+  color: #000;
+  font-family: Georgia, serif;
+}
+.browser-tab-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.browser-tab-close {
+  margin-left: 4px;
+  font-size: 10px;
+  color: #888;
+  flex-shrink: 0;
+}
+
+/* Chrome bar */
+.browser-chrome {
+  background: #ffffff;
+  padding: 7px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+.traffic-lights {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.tl {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+}
+.tl-red { background: #ff5f57; }
+.tl-yellow { background: #febc2e; }
+.tl-green { background: #28c840; }
+.browser-nav-btns {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.browser-nav-btn {
+  width: 22px; height: 22px;
+  border-radius: 4px;
+  background: none;
+  border: none;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 12px;
+}
+.url-bar {
+  flex: 1;
+  background: #f1f1f1;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 12px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.url-bar i { font-size: 12px; color: #4CAF50; }
+.url-text { font-size: 12px; color: #444; }
+.url-text .url-domain { font-weight: 600; color: #111; }
+.browser-toolbar-icons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  color: #666;
+  font-size: 16px;
+}
+
+/* ── AMAZON NAVBAR inside browser ─────────────────────────────── */
+.amz-desktop-nav {
+  background: #131921;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.amz-logo-desktop {
+  flex-shrink: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 1px;
+}
+.amz-logo-desktop span:first-child {
+  font-size: 22px;
+  font-weight: 900;
+  color: #fff;
+  font-family: Georgia, serif;
+  letter-spacing: -1px;
+}
+.amz-logo-desktop span.tld {
+  font-size: 9px;
+  color: #f90;
+  font-weight: 900;
+  vertical-align: super;
+}
+.amz-search-desktop {
+  flex: 1;
+  display: flex;
+  border-radius: 4px;
+  overflow: hidden;
+  height: 34px;
+}
+.amz-search-category {
+  background: #e3e6e6;
+  padding: 0 8px;
+  font-size: 11px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  border-right: 1px solid #ccc;
+  cursor: default;
+  flex-shrink: 0;
+}
+.amz-search-input {
+  flex: 1;
+  background: #fff;
+  padding: 0 10px;
+  font-size: 13px;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+.amz-search-btn {
+  width: 44px;
+  background: #febd69;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  flex-shrink: 0;
+}
+.amz-search-btn i { font-size: 16px; color: #333; }
+.amz-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+.amz-nav-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  cursor: default;
+}
+.amz-nav-icon span {
+  font-size: 9px;
+  color: #ccc;
+  white-space: nowrap;
+}
+.amz-nav-icon strong {
+  font-size: 12px;
+  color: #fff;
+  white-space: nowrap;
+}
+.amz-nav-icon i { font-size: 22px; color: #fff; }
+.amz-cart-wrap { position: relative; }
+.amz-cart-count {
+  position: absolute;
+  top: -3px; right: -5px;
+  background: #f90;
+  width: 15px; height: 15px;
+  border-radius: 50%;
+  font-size: 9px;
+  font-weight: 700;
+  color: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.amz-secondary-nav {
+  background: #232f3e;
+  padding: 6px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.amz-nav-link {
+  font-size: 11px;
+  color: #eee;
+  white-space: nowrap;
+  cursor: default;
+  padding: 2px 0;
+  border-bottom: 2px solid transparent;
+}
+.amz-nav-link:hover { border-color: #fff; }
+.amz-nav-link.amz-all {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  border: 1px solid #aaa;
+  border-radius: 3px;
+  padding: 2px 8px;
+}
+
+/* ── DESKTOP PAGE CONTENT ────────────────────────────────────────── */
+.desktop-page {
+  background: #fff;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+}
+.desktop-page::-webkit-scrollbar { width: 8px; }
+.desktop-page::-webkit-scrollbar-track { background: #f1f1f1; }
+.desktop-page::-webkit-scrollbar-thumb { background: #bbb; border-radius: 4px; }
+
+.desktop-content {
+  max-width: 970px;
+  margin: 0 auto;
+  padding: 12px 0 40px;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  font-size: 11px;
+  color: #007185;
+  padding: 6px 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.breadcrumb span { color: #555; }
+.breadcrumb .sep { color: #ccc; }
+
+/* ── PRODUCT SECTION 4-COL ──────────────────────────────────────── */
+.product-section {
+  display: grid;
+  grid-template-columns: 60px 1fr 280px 190px;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 28px;
+}
+
+/* Left: thumbnail strip */
+.thumb-strip {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 4px;
+}
+.thumb-item {
+  width: 55px;
+  height: 55px;
+  border: 1.5px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color .15s;
+  flex-shrink: 0;
+}
+.thumb-item.active { border-color: #e77600; }
+.thumb-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 2px;
+}
+.thumb-item-empty {
+  width: 55px;
+  height: 55px;
+  border: 1px dashed #ddd;
+  border-radius: 4px;
+  background: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ccc;
+  font-size: 14px;
+}
+
+/* Middle: main image */
+.main-img-area {
+  position: relative;
+  background: #fff;
+}
+.main-img-display {
+  width: 100%;
+  aspect-ratio: 1;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.main-img-display img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 12px;
+}
+.main-img-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #ccc;
+}
+.main-img-empty i { font-size: 40px; }
+.main-img-empty span { font-size: 12px; }
+.main-img-hint {
+  font-size: 11px;
+  color: #007185;
+  text-align: center;
+  margin-top: 6px;
+  cursor: default;
+}
+
+/* Right-middle: product info */
+.product-info-desktop {
+  padding-top: 4px;
+}
+.desktop-store-link {
+  font-size: 12px;
+  color: #007185;
+  font-weight: 500;
+  margin-bottom: 5px;
+  cursor: default;
+}
+.desktop-store-link:hover { color: #C7511F; text-decoration: underline; }
+.desktop-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0F1111;
+  line-height: 1.35;
+  margin-bottom: 8px;
+  word-break: break-word;
+}
+.desktop-rating-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.desktop-stars { font-size: 16px; color: #e77600; letter-spacing: -1px; }
+.desktop-review-count { font-size: 13px; color: #007185; cursor: default; }
+.desktop-divider { border: none; border-top: 1px solid #e7e7e7; margin: 10px 0; }
+.desktop-deliver {
+  font-size: 13px;
+  color: #0F1111;
+  margin-bottom: 10px;
+}
+.desktop-deliver strong { color: #007185; }
+.desktop-price-label {
+  font-size: 12px;
+  color: #565959;
+  margin-bottom: 4px;
+}
+.desktop-specs-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+  font-size: 12px;
+}
+.desktop-specs-table tr { border-bottom: 1px solid #f0f0f0; }
+.desktop-specs-table td:first-child {
+  color: #555;
+  padding: 5px 12px 5px 0;
+  white-space: nowrap;
+  font-weight: 500;
+  width: 40%;
+}
+.desktop-specs-table td:last-child {
+  color: #0F1111;
+  padding: 5px 0;
+}
+.desktop-bullets {
+  list-style: disc;
+  padding-left: 16px;
+  font-size: 12px;
+  color: #333;
+  line-height: 1.6;
+  margin-top: 10px;
+}
+.desktop-bullets li { margin-bottom: 2px; }
+
+/* Far right: buy box */
+.buy-box {
+  border: 1px solid #d5d9d9;
+  border-radius: 8px;
+  padding: 14px;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(213,217,217,.5);
+  position: sticky;
+  top: 12px;
+}
+.buy-box-price {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0F1111;
+  margin-bottom: 4px;
+}
+.buy-box-sub {
+  font-size: 11px;
+  color: #565959;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.buy-box-no-offer {
+  font-size: 12px;
+  color: #CC0C39;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.buy-box-btn {
+  width: 100%;
+  background: #FFA41C;
+  border: 1px solid #FF8F00;
+  border-radius: 20px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #111;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  transition: filter .15s;
+}
+.buy-box-btn:hover { filter: brightness(.96); }
+.buy-box-btn-outline {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #d5d9d9;
+  border-radius: 20px;
+  padding: 8px 14px;
+  font-size: 13px;
+  color: #0F1111;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: filter .15s;
+}
+.buy-box-divider { border: none; border-top: 1px solid #e7e7e7; margin: 10px 0; }
+.buy-box-meta { font-size: 11px; color: #565959; line-height: 1.6; }
+.buy-box-meta strong { color: #0F1111; }
+
+/* ── BELOW FOLD ───────────────────────────────────────────────── */
+.below-fold { padding: 0; }
+
+.from-brand-section {
+  border-top: 1px solid #e7e7e7;
+  padding: 16px 0;
+}
+.from-brand-heading {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0F1111;
+  margin-bottom: 12px;
+}
+
+/* Desktop A+ banners: 97:30 ratio, full width, no gaps */
+#desktopAplusSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+  font-size: 0;
+}
+
+.desktop-aplus-module {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 97 / 30;
+  background: #f5f5f5;
+  overflow: hidden;
+  display: block;
+  line-height: 0;
+  margin: 0 0 -1px;
+  padding: 0;
+  font-size: 0;
+}
+
+.desktop-aplus-module img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.desktop-aplus-remove {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: rgba(0,0,0,.55);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity .15s;
+}
+.desktop-aplus-module:hover .desktop-aplus-remove { opacity: 1; }
+.desktop-aplus-remove i { font-size: 11px; color: #fff; }
+
+.desktop-aplus-empty {
+  width: 100%;
+  aspect-ratio: 97 / 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #bbb;
+  background: #fafafa;
+  border: 1px dashed #ddd;
+  line-height: normal;
+  font-size: 12px;
+}
+.desktop-aplus-empty i { font-size: 22px; }
+.desktop-aplus-empty span { font-size: 11px; }
+
+.product-desc-heading {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0F1111;
+  margin: 16px 0 10px;
+  border-top: 1px solid #e7e7e7;
+  padding-top: 16px;
+}
+
+/* From-brand carousel placeholder */
+.brand-carousel-hint {
+  background: #f8f8f8;
+  border: 1px solid #e7e7e7;
+  border-radius: 6px;
+  padding: 16px;
+  font-size: 12px;
+  color: #888;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+/* ── APLUS SECTION PANE (sidebar) ───────────────────────────────── */
+#aplusMobilePart { display: block; }
+#aplusDesktopPart { display: none; }
+
+/* Drawer handle hidden on desktop; shown in mobile media query */
+.drawer-handle { display: none; }
+.drawer-backdrop { display: none; }
+
+/* ════════════════════════════════════════════════════════════════
+   RESPONSIVE — TABLET  (≤1024px)
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .app-body {
+    grid-template-columns: 260px 1fr;
+  }
+
+  .header-title { font-size: 12px; }
+  .header-subtitle { font-size: 10px; }
+
+  .preview-canvas { padding: 16px; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   RESPONSIVE — MOBILE  (≤768px)
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* ── Body becomes single column, preview takes full height ── */
+  html, body { overflow: hidden; height: 100%; }
+
+  .app-body {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ── HEADER ── */
+  .app-header {
+    padding: 0 12px;
+    height: 48px;
+    position: relative;
+    z-index: 200;
+  }
+
+  .header-subtitle { display: none; }
+
+  .header-logo {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+  }
+
+  /* Move view-toggle into header on mobile */
+  .header-right {
+    gap: 6px;
+  }
+
+  /* ── PREVIEW area fills all remaining space ── */
+  .preview-area {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ── PREVIEW TOOLBAR ── */
+  .preview-toolbar {
+    height: 44px;
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  /* Hide text labels on view buttons — icons only */
+  .view-btn .view-btn-label { display: none; }
+
+  /* Tighter view toggle buttons */
+  .view-btn {
+    padding: 6px 8px;
+    min-width: 36px;
+    min-height: 36px;
+    justify-content: center;
+  }
+
+  /* Hide desktop view button entirely on mobile */
+  #btnDesktopView { display: none; }
+
+  /* Hide zoom controls on mobile */
+  .zoom-controls { display: none; }
+
+  /* ── CANVAS: let phone scale to fit ── */
+  .preview-canvas {
+    padding: 12px 8px;
+    align-items: flex-start;
+    justify-content: center;
+    overflow: auto;
+  }
+
+  /* Scale phone frame to fit the screen width */
+  .phone-scaler {
+    transform-origin: top center;
+  }
+
+  /* ── SIDEBAR → slide-up drawer at bottom ── */
+  .sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px; /* collapsed: only handle visible */
+    max-height: 65vh;
+    z-index: 150;
+    border-right: none;
+    border-top: 1px solid var(--border);
+    border-radius: 16px 16px 0 0;
+    transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    box-shadow: 0 -8px 32px rgba(0,0,0,0.45);
+    background: var(--surface);
+    /* Prevent the sidebar from shrinking when closed */
+    flex-shrink: 0;
+  }
+
+  .sidebar.drawer-open {
+    height: 65vh;
+  }
+
+  /* Drag handle bar */
+  .sidebar::before {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 4px;
+    background: var(--border2);
+    border-radius: 2px;
+    margin: 8px auto 0;
+    flex-shrink: 0;
+  }
+
+  /* Handle row with label */
+  .drawer-handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    cursor: pointer;
+    user-select: none;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    /* sits above the scrollable content */
+  }
+
+  .drawer-handle-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-2);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    margin-top: 4px; /* push below the ::before handle bar */
+  }
+
+  /* Drawer close button (hidden by default, shown when open) */
+  .drawer-close {
+    display: none;
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-2);
+    font-size: 14px;
+    z-index: 3;
+    line-height: 1;
+    padding: 0;
+  }
+  .sidebar.drawer-open .drawer-close { display: flex; }
+
+  /* Sidebar scroll area: takes up remaining height inside drawer */
+  .sidebar-scroll {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(65vh - 40px);
+    padding: 16px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Semi-transparent backdrop when drawer is open */
+  .drawer-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 140;
+    backdrop-filter: blur(2px);
+  }
+  .drawer-backdrop.visible { display: block; }
+
+  /* ── Drawer handle: always in DOM but only visible on mobile ── */
+  .drawer-handle { display: flex; }
+
+  /* Give preview-area bottom padding to clear the collapsed drawer handle */
+  .preview-area {
+    padding-bottom: 40px;
+  }
+  .btn,
+  .zoom-btn,
+  .view-btn,
+  .btn-add-bullet {
+    min-height: 44px;
+  }
+
+  .view-btn {
+    min-height: 36px; /* keep toggle compact in header */
+  }
+
+  /* Bullet delete buttons ≥36px */
+  .bullet-del {
+    min-width: 36px;
+    min-height: 36px;
+    width: 36px;
+    height: 36px;
+  }
+
+  /* Slot touch targets: taller minimum */
+  .slot {
+    min-height: 56px;
+  }
+
+  /* A+ upload zones: easier tapping */
+  .aplus-upload-zone {
+    min-height: 80px;
+  }
+  .aplus-upload-zone-wide {
+    min-height: 56px;
+  }
+
+  /* Disable drag-to-reorder visual affordance on touch */
+  .drag-handle { display: none !important; }
+  .slot[draggable="true"] { cursor: pointer; }
+
+  /* Keep slot-grid 3-column */
+  .slot-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
 </style>
 </head>
 <body>
 
-<div class="wrap">
-  <div class="panel">
-    <p class="panel-title">Controls</p>
-    <label class="lbl">Product title</label>
-    <textarea class="title-input" id="titleInput" rows="3" placeholder="e.g. Sportstech 2-in-1 Vibration Plate 3D Massage…"></textarea>
-    <p class="sublbl">Images — click to upload (slot 1 = main image)</p>
-    <div class="slot-grid" id="slotGrid"></div>
-    <p class="hint">&#9432; Drag left/right on the phone image to swipe through slides.</p>
-  </div>
-
-  <div class="divider"></div>
-
-  <div class="phone-wrap">
-    <div class="phone">
-      <div class="screen">
-
-        <div class="status-bar">
-          <span class="status-time">3:27</span>
-          <div class="status-icons">
-            <i class="ti ti-wifi"></i>
-            <i class="ti ti-signal-3g"></i>
-            <i class="ti ti-battery-2"></i>
-          </div>
-        </div>
-
-        <div class="amz-topbar">
-          <i class="ti ti-menu-2" style="font-size:15px;color:#111"></i>
-          <div style="display:flex;align-items:baseline;gap:1px">
-            <span style="font-size:15px;font-weight:900;color:#111;font-family:serif;letter-spacing:-1px">amazon</span>
-            <span style="font-size:8px;color:#f90;font-weight:900;vertical-align:super">.de</span>
-          </div>
-          <div class="top-icons">
-            <i class="ti ti-user"></i>
-            <div class="cart-wrap">
-              <i class="ti ti-shopping-cart"></i>
-              <span class="cart-ct">0</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="search-row">
-          <i class="ti ti-search"></i>
-          <span class="search-txt" id="searchTxt">vx350 vibrationsplatte</span>
-          <i class="ti ti-microphone"></i>
-        </div>
-
-        <div class="deliver-bar">
-          <i class="ti ti-map-pin"></i>
-          <span class="deliver-txt">Deliver to <span>India</span></span>
-          <i class="ti ti-chevron-down" style="font-size:10px;color:#ccc;margin-left:2px"></i>
-        </div>
-
-        <div class="store-row">
-          <span class="store-link">Visit the Sportstech Store</span>
-          <div class="rating-block">
-            <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
-            <span class="review-ct">(247)</span>
-          </div>
-        </div>
-
-        <div class="prod-title-area" id="previewTitle">Sportstech 2-in-1 Vibration Plate 3D Massage &amp; Fitness at Home | Massager with Heat Against Cold Feet | VX350</div>
-
-        <div class="carousel-area" id="carouselArea">
-          <div class="carousel-track" id="carouselTrack"></div>
-        </div>
-
-        <div class="below-carousel">
-          <div class="dots-row" id="dotsRow"></div>
-          <div class="action-icons">
-            <i class="ti ti-heart"></i>
-            <i class="ti ti-share"></i>
-          </div>
-        </div>
-
-        <div class="safety-block">
-          <p class="safety-title">Safety and product resources</p>
-          <p class="safety-link"><span class="bullet">&#8226;</span><i class="ti ti-recycle"></i> Want to recycle your product FREE of charge?</p>
-        </div>
-
-        <div class="nav-bar">
-          <div class="nav-item active"><i class="ti ti-home"></i><span class="nav-label">Home</span></div>
-          <div class="nav-item"><i class="ti ti-search"></i><span class="nav-label">Search</span></div>
-          <div class="nav-item"><i class="ti ti-shopping-cart"></i><span class="nav-label">Cart</span></div>
-          <div class="nav-item"><i class="ti ti-list"></i><span class="nav-label">Orders</span></div>
-          <div class="nav-item"><i class="ti ti-user"></i><span class="nav-label">Account</span></div>
-        </div>
-
-      </div>
+<!-- ── HEADER ──────────────────────────────────────────────────── -->
+<header class="app-header">
+  <div class="header-brand">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 968 228" height="32" style="flex-shrink:0;display:block;" aria-label="Sportstech">
+      <rect width="968" height="228" rx="28" ry="28" fill="#FFFFFF"/>
+      <path d="M0 0 C3.27884114 1.86904625 5.57744987 4.12904516 8 7 C8.825 7.969375 9.65 8.93875 10.5 9.9375 C12.3890337 13.79427714 12.84200777 16.84306072 12 21 C7.84383472 33.11344655 -4.91564647 38.26197154 -15.4375 44 C-22.6218696 47.93231226 -29.6683283 51.95565859 -36.52880859 56.43408203 C-39.8974131 58.56866307 -43.38300732 60.44493259 -46.8984375 62.32421875 C-51.41629493 64.76522736 -55.87823297 67.30393464 -60.3425293 69.84130859 C-73.27755471 77.15949153 -73.27755471 77.15949153 -80 76 C-85.32196642 74.05374368 -88.80249577 70.65922045 -92 66 C-93.80962481 61.26050646 -94.55155444 57.05591573 -94 52 C-89.20896011 42.78646175 -80.07138067 38.54077477 -71.375 33.625 C-69.13265538 32.34662972 -66.89046714 31.06798511 -64.6484375 29.7890625 C-62.98288818 28.84184326 -62.98288818 28.84184326 -61.28369141 27.87548828 C-54.12934682 23.78926708 -47.03082971 19.60743313 -39.9296875 15.4296875 C-37.91145833 14.24479167 -35.89322917 13.05989583 -33.875 11.875 C-32.86824219 11.28074219 -31.86148438 10.68648437 -30.82421875 10.07421875 C-9.94158914 -2.16359653 -9.94158914 -2.16359653 0 0 Z" fill="#EB0222" transform="translate(162,49)"/>
+      <path d="M0 0 C5.7341666 2.79619388 10.16132862 6.20661093 13 12 C14.04246339 17.78464979 12.98748642 22.95861666 10 28 C4.27453454 34.08514214 -2.71689387 37.94572338 -10 41.875 C-12.23486662 43.09415131 -14.46924205 44.31420347 -16.703125 45.53515625 C-18.32250977 46.4171167 -18.32250977 46.4171167 -19.97460938 47.31689453 C-22.60243493 48.77882395 -25.17519319 50.29323121 -27.734375 51.87109375 C-35.51761857 56.64179445 -42.55496753 60.17042189 -52 59 C-56.93865454 56.79524351 -59.82252458 53.26689557 -63 49 C-64.773051 43.680847 -64.87758841 37.57425933 -63.0625 32.25 C-56.31830632 24.8926978 -47.74125458 20.47356097 -39.078125 15.7734375 C-33.50247823 12.74760232 -28.00080405 9.59682223 -22.5 6.4375 C-20.71896498 5.41499003 -18.93773143 4.39282575 -17.15625 3.37109375 C-16.02413086 2.7203186 -16.02413086 2.7203186 -14.86914062 2.05639648 C-9.9941834 -0.69882033 -5.52875135 -0.87633559 0 0 Z" fill="#EB0223" transform="translate(133,120)"/>
+      <path d="M0 0 C10.86038638 -0.58743515 20.48701119 3.00329161 29.2734375 9.21484375 C27.71139631 12.72943642 26.15371758 15.62997701 23.2734375 18.21484375 C18.47258616 18.71554604 13.96182401 17.15263925 9.4609375 15.65234375 C2.99195838 13.59035666 -3.96467033 13.09416818 -10.51953125 15.046875 C-13.06079492 16.06655202 -13.06079492 16.06655202 -13.7265625 19.21484375 C-13.04142578 19.34536133 -12.35628906 19.47587891 -11.65039062 19.61035156 C-8.50663828 20.2163889 -5.36672101 20.84046339 -2.2265625 21.46484375 C-1.14890625 21.66980469 -0.07125 21.87476562 1.0390625 22.0859375 C8.58787185 23.60490524 15.5327368 25.06303795 20.7734375 31.08984375 C22.76075036 35.23007887 23.01885468 37.75644801 21.68359375 42.16015625 C19.15693381 48.28468681 14.95541104 51.11867853 9.2734375 54.21484375 C8.70592773 54.55974854 8.13841797 54.90465332 7.55371094 55.26000977 C2.01469056 58.40451415 -2.67978511 58.8118644 -8.9765625 58.65234375 C-10.36645386 58.62926147 -10.36645386 58.62926147 -11.78442383 58.60571289 C-23.86073905 58.26647274 -32.22804572 55.88510619 -41.7265625 48.21484375 C-40.99539051 43.86579477 -38.96551463 41.99792451 -35.62890625 39.2890625 C-33.7265625 38.21484375 -33.7265625 38.21484375 -30.6015625 38.65234375 C-28.76479051 39.65058939 -26.94893064 40.68900952 -25.1640625 41.77734375 C-20.08119719 44.77493099 -14.40589718 44.42776976 -8.6640625 44.46484375 C-7.46040039 44.49578125 -7.46040039 44.49578125 -6.23242188 44.52734375 C-2.71847815 44.55067284 -0.37141341 44.55795691 2.76953125 42.88671875 C4.50739189 41.17856172 4.50739189 41.17856172 5.2734375 38.21484375 C4.55800781 38.08956299 3.84257812 37.96428223 3.10546875 37.83520508 C-0.17531546 37.25029813 -3.45067591 36.6390617 -6.7265625 36.02734375 C-7.85191406 35.83076172 -8.97726563 35.63417969 -10.13671875 35.43164062 C-16.65199986 34.1933562 -22.74209782 32.85507293 -27.7265625 28.21484375 C-30.09595418 24.34545845 -30.4535682 20.64957852 -29.7265625 16.21484375 C-27.77153731 10.17726595 -23.8566769 7.36068417 -18.4765625 4.27734375 C-11.90576781 1.03250687 -7.07952131 0.55784194 0 0 Z" fill="#050505" transform="translate(239.7265625,84.78515625)"/>
+      <path d="M0 0 C2.87554962 -0.31707873 5.5311031 -0.44397022 8.41015625 -0.43359375 C9.25162704 -0.4388356 10.09309784 -0.44407745 10.96006775 -0.44947815 C12.74639788 -0.45591156 14.5327703 -0.45454434 16.3190918 -0.44604492 C19.02797208 -0.43760754 21.73469163 -0.46615693 24.44335938 -0.49804688 C26.18229104 -0.49966102 27.9212264 -0.49907729 29.66015625 -0.49609375 C30.86068382 -0.51294472 30.86068382 -0.51294472 32.08546448 -0.53013611 C38.59656665 -0.45118772 44.64967444 1.13760029 49.69398499 5.44728088 C53.07693861 9.46926892 52.39952109 15.06252236 52 20 C49.98422045 26.99594078 45.5226274 31.57200723 39.63671875 35.62890625 C29.96791522 40.65668409 13.43744986 40.50900237 3 38 C2.7525 39.27875 2.505 40.5575 2.25 41.875 C1.08315384 47.19345096 -0.8833949 51.99070127 -3 57 C-7.62 57 -12.24 57 -17 57 C-16.47080203 49.61423696 -14.66954531 43.18691394 -12.3125 36.1875 C-11.58553536 33.98102951 -10.86029912 31.77398888 -10.13671875 29.56640625 C-9.77626465 28.4695752 -9.41581055 27.37274414 -9.04443359 26.24267578 C-7.21574503 20.56510649 -5.54588685 14.84015723 -3.90356445 9.10620117 C-2.90387272 5.68460932 -1.9920276 2.9880414 0 0 Z" fill="#050505" transform="translate(286,86)"/>
+      <path d="M0 0 C3.45884061 3.39958852 5.58369973 6.41545074 6.42578125 11.23828125 C6.49986023 22.86868168 3.36265999 30.96389944 -4.17578125 39.79296875 C-12.10330843 47.60778227 -22.98393728 51.04957081 -33.92578125 51.29296875 C-43.07635659 50.94138901 -50.7100298 49.56661312 -57.17578125 42.79296875 C-62.09575753 36.57826187 -61.9358334 30.51547395 -61.17578125 22.79296875 C-59.28662087 12.56652208 -52.43423625 4.75909525 -44.17578125 -1.20703125 C-30.12466671 -9.498222 -13.09652626 -9.80180268 0 0 Z" fill="#050505" transform="translate(407.17578125,92.20703125)"/>
+      <path d="M0 0 C5.40768471 -0.07455448 10.81506548 -0.12879227 16.22314453 -0.16479492 C18.06011166 -0.17981496 19.89704334 -0.20023709 21.73388672 -0.22631836 C24.38518054 -0.26300202 27.03599732 -0.27979438 29.6875 -0.29296875 C30.49928711 -0.30845261 31.31107422 -0.32393646 32.14746094 -0.33988953 C40.59856523 -0.34234396 46.86568973 2.16492437 53 8 C55.10940589 12.21881179 53.67906816 17.88486967 52.28515625 22.2265625 C49.51592235 28.38305674 45.1535902 32.52385139 39.0625 35.375 C38.381875 35.58125 37.70125 35.7875 37 36 C37.60318186 40.5758624 38.83447851 44.47671609 40.5625 48.75 C43 54.79886686 43 54.79886686 43 57 C40.37472811 57.05382106 37.75055287 57.09358313 35.125 57.125 C34.37863281 57.14175781 33.63226563 57.15851563 32.86328125 57.17578125 C30.90805539 57.1933959 28.95257979 57.10320189 27 57 C24.38056097 54.38056097 23.55802162 51.42526027 22.375 48 C22.03082031 47.03707031 22.03082031 47.03707031 21.6796875 46.0546875 C20 41.27557664 20 41.27557664 20 39 C14.39 38.67 8.78 38.34 3 38 C2.7525 39.464375 2.505 40.92875 2.25 42.4375 C1.21733134 47.68315746 -0.62636744 52.22968989 -3 57 C-5.12493141 57.02693575 -7.24995912 57.04636628 -9.375 57.0625 C-10.55835938 57.07410156 -11.74171875 57.08570313 -12.9609375 57.09765625 C-16 57 -16 57 -18 56 C-17.8138916 55.44675049 -17.6277832 54.89350098 -17.43603516 54.32348633 C-15.69505109 49.12751334 -14.01237105 43.91691955 -12.375 38.6875 C-9.66014107 30.05117854 -6.89784283 21.43033378 -4.125 12.8125 C-3.92009949 12.17565277 -3.71519897 11.53880554 -3.50408936 10.88265991 C-2.33672212 7.25489311 -1.16865319 3.62735274 0 0 Z" fill="#070707" transform="translate(434,86)"/>
+      <path d="M0 0 C18.15 0 36.3 0 55 0 C55 6 55 6 52 13 C38.8 13 25.6 13 12 13 C11.67 15.64 11.34 18.28 11 21 C23.21 21 35.42 21 48 21 C49.15019009 24.45057028 48.80497206 25.30159244 47.625 28.625 C47.34914063 29.42164062 47.07328125 30.21828125 46.7890625 31.0390625 C46 33 46 33 45 34 C42.04294679 34.08868299 39.10934944 34.11520296 36.15234375 34.09765625 C34.82270348 34.09553383 34.82270348 34.09553383 33.46620178 34.09336853 C30.62326746 34.08775215 27.78041069 34.07519691 24.9375 34.0625 C23.01497509 34.05748711 21.09244896 34.05292384 19.16992188 34.04882812 C14.44658451 34.03777741 9.72330542 34.02050183 5 34 C4.34 36.97 3.68 39.94 3 43 C15.54 43.33 28.08 43.66 41 44 C40.34 47.96 39.68 51.92 39 56 C20.85 56 2.7 56 -16 56 C-15.26731178 50.87118246 -14.48886408 46.99621978 -12.85546875 42.2109375 C-12.64440994 41.58579254 -12.43335114 40.96064758 -12.21589661 40.31655884 C-11.54548825 38.33404066 -10.8669466 36.35443666 -10.1875 34.375 C-4.15133522 17.43632317 -4.15133522 17.43632317 0 0 Z" fill="#050505" transform="translate(714,86)"/>
+      <path d="M0 0 C1.671875 1.37109375 1.671875 1.37109375 3.859375 3.62109375 C3.5747674 7.03638489 3.06276829 8.40607799 0.671875 10.93359375 C-2.82817038 13.03362098 -4.09556885 13.22036133 -8.140625 12.62109375 C-9.79280671 11.97031929 -11.43791464 11.30147731 -13.078125 10.62109375 C-20.38381049 7.77720242 -29.62499058 7.11588228 -37.140625 9.62109375 C-37.140625 10.94109375 -37.140625 12.26109375 -37.140625 13.62109375 C-35.27785896 14.0616561 -33.41504465 14.50201528 -31.55200195 14.94140625 C-29.98118426 15.31235499 -28.41070981 15.68476013 -26.84057617 16.05859375 C-22.88902153 16.99506315 -18.94362799 17.86427422 -14.953125 18.62109375 C-9.57666961 20.03131156 -6.22952713 21.98774056 -3.140625 26.62109375 C-2.42850934 31.43201465 -2.58832255 35.47230466 -4.703125 39.87109375 C-10.78044631 46.72755882 -16.83455511 51.41195242 -26.140625 52.62109375 C-40.68022331 53.41123218 -52.91763408 52.86772948 -64.765625 43.55859375 C-66.140625 41.62109375 -66.140625 41.62109375 -66.265625 39.68359375 C-64.52072036 36.48460191 -62.06576766 34.72719646 -59.140625 32.62109375 C-58.150625 32.62109375 -57.160625 32.62109375 -56.140625 32.62109375 C-55.810625 33.28109375 -55.480625 33.94109375 -55.140625 34.62109375 C-45.55475181 38.5707618 -35.41990378 39.93258794 -25.140625 38.62109375 C-22.38141041 37.15160976 -21.40496881 36.39209653 -20.390625 33.43359375 C-20.308125 32.83546875 -20.225625 32.23734375 -20.140625 31.62109375 C-20.78386719 31.58371094 -21.42710937 31.54632813 -22.08984375 31.5078125 C-32.70205555 30.73574003 -44.52782501 29.47788597 -53.140625 22.62109375 C-54.63896584 18.12607123 -55.14283452 14.29587368 -54.140625 9.62109375 C-49.60274565 2.11860927 -43.53144202 -2.17006535 -35.140625 -4.37890625 C-23.79927613 -7.12035813 -10.0153285 -6.45147986 0 0 Z" fill="#060606" transform="translate(623.140625,90.37890625)"/>
+      <path d="M0 0 C0.99 0 1.98 0 3 0 C3.05399736 1.45792884 3.09279177 2.91642712 3.125 4.375 C3.14820313 5.18710938 3.17140625 5.99921875 3.1953125 6.8359375 C3 9 3 9 1 11 C0.67 7.37 0.34 3.74 0 0 Z" fill="#E2233A" transform="translate(143,132)"/>
+      <path d="M0 0 C20.46 0 40.92 0 62 0 C60.77564219 9.7948625 60.77564219 9.7948625 58 13 C55.5480957 13.65942383 55.5480957 13.65942383 52.67578125 13.70703125 C51.64775391 13.73603516 50.61972656 13.76503906 49.56054688 13.79492188 C48.48869141 13.80072266 47.41683594 13.80652344 46.3125 13.8125 C44.68731445 13.85020508 44.68731445 13.85020508 43.02929688 13.88867188 C40.35250017 13.94763215 37.67734185 13.98384663 35 14 C34.64695801 15.08941895 34.29391602 16.17883789 33.93017578 17.30126953 C32.61467201 21.36043309 31.29883959 25.41949005 29.98291016 29.47851562 C29.4144617 31.23206748 28.84610123 32.98564786 28.27783203 34.73925781 C27.45889289 37.26635197 26.63963274 39.79334188 25.8203125 42.3203125 C25.56814972 43.09867462 25.31598694 43.87703674 25.05618286 44.6789856 C24.8160849 45.41930023 24.57598694 46.15961487 24.32861328 46.92236328 C24.01550705 47.88832932 24.01550705 47.88832932 23.69607544 48.87380981 C22.80812791 51.58608095 21.90248909 54.29253274 21 57 C16.38 57 11.76 57 7 57 C7.53412868 50.53897356 8.75127997 44.88230396 10.8125 38.75 C11.35458314 37.0886775 11.89624795 35.42721845 12.4375 33.765625 C12.70304688 32.95931641 12.96859375 32.15300781 13.2421875 31.32226562 C14.30670423 28.06012544 15.31163907 24.78223512 16.3125 21.5 C17.18140129 18.65498987 18.05928103 15.8221569 19 13 C11.74 13 4.48 13 -3 13 C-2 6 -2 6 0 0 Z" fill="#060606" transform="translate(502,86)"/>
+      <path d="M0 0 C20.46 0 40.92 0 62 0 C61 7 61 7 59 13 C51.41 13.33 43.82 13.66 36 14 C33.71487646 20.16823556 31.52098801 26.35588527 29.45703125 32.6015625 C29.13289749 33.58222687 29.13289749 33.58222687 28.80221558 34.58270264 C27.90850258 37.29150268 27.01714408 40.00106554 26.12817383 42.71142578 C25.46953599 44.71733104 24.80727115 46.72200951 24.14453125 48.7265625 C23.75628174 49.90814941 23.36803223 51.08973633 22.96801758 52.30712891 C22 55 22 55 21 56 C18.64686445 56.07271741 16.29166332 56.08370868 13.9375 56.0625 C12.64714844 56.05347656 11.35679687 56.04445312 10.02734375 56.03515625 C9.02832031 56.02355469 8.02929688 56.01195312 7 56 C8.25000514 49.85414138 9.89945142 43.95306915 11.78125 37.97265625 C14.35299863 29.69976078 16.63457347 21.33275255 19 13 C11.41 13 3.82 13 -4 13 C-3 7 -3 7 0 0 Z" fill="#050505" transform="translate(640,86)"/>
+      <path d="M0 0 C1.5625 2.0625 1.5625 2.0625 1.49609375 4.484375 C0.2098343 8.03638855 -1.49006098 8.68761955 -4.8125 10.375 C-5.78960938 10.88675781 -6.76671875 11.39851563 -7.7734375 11.92578125 C-10.4375 13.0625 -10.4375 13.0625 -13.4375 13.0625 C-13.4375 12.4025 -13.4375 11.7425 -13.4375 11.0625 C-14.0975 11.0625 -14.7575 11.0625 -15.4375 11.0625 C-15.4375 10.4025 -15.4375 9.7425 -15.4375 9.0625 C-22.94074622 6.02064343 -28.72558893 4.87226934 -36.5 7.5625 C-41.78650451 9.89934743 -45.67542401 12.91659409 -48.4375 18.0625 C-49.26625688 21.59817059 -49.30017717 24.53281382 -48.4375 28.0625 C-45.45007537 32.28004066 -42.44174624 33.96156583 -37.4375 35.0625 C-31.12169588 35.79124663 -25.9614283 34.00295843 -20.4375 31.0625 C-18.73421681 29.4332726 -17.05588719 27.77608643 -15.4375 26.0625 C-14.1175 26.0625 -12.7975 26.0625 -11.4375 26.0625 C-11.4375 26.7225 -11.4375 27.3825 -11.4375 28.0625 C-10.65375 28.35125 -9.87 28.64 -9.0625 28.9375 C-6.4375 30.0625 -6.4375 30.0625 -4.4375 32.0625 C-4.56054526 35.50776737 -6.50645244 38.00845004 -8.7265625 40.54296875 C-17.37589417 48.22468113 -28.55103168 49.50991831 -39.61328125 49.30078125 C-49.00466784 48.71561825 -55.44468696 47.18121302 -61.9140625 40.09765625 C-66.53857262 33.91978504 -66.34811756 27.57908884 -65.4375 20.0625 C-63.94411517 15.99946335 -61.88751594 12.61643117 -59.4375 9.0625 C-58.96957031 8.32128906 -58.50164063 7.58007812 -58.01953125 6.81640625 C-51.85644453 -2.31601077 -42.94951355 -6.14114893 -32.5625 -8.625 C-19.71689785 -9.90956022 -10.23913215 -8.13879735 0 0 Z" fill="#050505" transform="translate(835.4375,93.9375)"/>
+      <path d="M0 0 C4.62 0 9.24 0 14 0 C14 5.20666031 13.02420475 7.32875826 11 12 C10.34 14.97 9.68 17.94 9 21 C19.23 21 29.46 21 40 21 C40.33 19.02 40.66 17.04 41 15 C41.63464626 12.55396754 42.30238636 10.11632397 43 7.6875 C43.350625 6.45386719 43.70125 5.22023438 44.0625 3.94921875 C45 1 45 1 46 0 C48.35313555 -0.07271741 50.70833668 -0.08370868 53.0625 -0.0625 C54.99802734 -0.04896484 54.99802734 -0.04896484 56.97265625 -0.03515625 C57.97167969 -0.02355469 58.97070312 -0.01195313 60 0 C59.5817686 3.9313752 58.92828569 7.45899409 57.63671875 11.19921875 C57.36802979 11.9878833 57.09934082 12.77654785 56.82250977 13.58911133 C56.55108154 14.38470459 56.27965332 15.18029785 56 16 C52.50413918 26.59091996 49.3031124 37.22042429 46.56103516 48.03271484 C45.08954301 53.82091398 45.08954301 53.82091398 44 56 C38.72 56 33.44 56 28 56 C29.7360284 48.80788236 31.649215 42.05235501 34 35 C24.1 35 14.2 35 4 35 C2.02852124 41.5375226 2.02852124 41.5375226 0.12109375 48.09375 C-0.10449219 48.8878125 -0.33007812 49.681875 -0.5625 50.5 C-0.90474609 51.72203125 -0.90474609 51.72203125 -1.25390625 52.96875 C-2 55 -2 55 -4 57 C-7.0390625 57.1953125 -7.0390625 57.1953125 -10.625 57.125 C-12.40777344 57.09792969 -12.40777344 57.09792969 -14.2265625 57.0703125 C-15.59941406 57.03550781 -15.59941406 57.03550781 -17 57 C-18.23322635 53.475984 -17.75496885 51.38311815 -16.59375 47.87890625 C-16.26528076 46.87069824 -15.93681152 45.86249023 -15.59838867 44.82373047 C-15.23592041 43.74752441 -14.87345215 42.67131836 -14.5 41.5625 C-14.13559814 40.45535645 -13.77119629 39.34821289 -13.39575195 38.20751953 C-12.64164448 35.92116638 -11.88289374 33.63633976 -11.11962891 31.35302734 C-10.07159774 28.21441854 -9.03877563 25.07130514 -8.01171875 21.92578125 C-7.40426928 20.07531606 -6.79622774 18.22504509 -6.1875 16.375 C-5.91035156 15.5301001 -5.63320313 14.6852002 -5.34765625 13.81469727 C-3.7763581 9.09651224 -2.02728804 4.54161224 0 0 Z" fill="#070707" transform="translate(855,86)"/>
+      <path d="M0 0 C0.7921375 5.18772402 0.48738128 10.35508817 -1 15.375 C-4.86064326 20.44209428 -9.93770919 24.02749344 -16 26 C-21.34741818 26.61153985 -26.27969275 26.9479244 -31.0625 24.3125 C-34.05738774 20.73795657 -35.79149986 18.3813134 -36.5 13.6875 C-35.57554328 6.86963173 -31.2961969 1.28739749 -26 -3 C-16.37572131 -6.96293828 -8.42875645 -5.61917097 0 0 Z" fill="#FFFFFF" transform="translate(397,104)"/>
+      <path d="M0 0 C1.01964844 -0.01224609 2.03929687 -0.02449219 3.08984375 -0.03710938 C4.55744141 -0.04000977 4.55744141 -0.04000977 6.0546875 -0.04296875 C6.95429199 -0.04707764 7.85389648 -0.05118652 8.78076172 -0.05541992 C11.125 0.1875 11.125 0.1875 14.125 2.1875 C14.625 4.5 14.625 4.5 14.125 7.1875 C11.94953396 9.70646068 10.114803 11.6925985 7.125 13.1875 C5.3845583 13.27199628 3.64090278 13.29473024 1.8984375 13.28515625 C0.8671875 13.28193359 -0.1640625 13.27871094 -1.2265625 13.27539062 C-2.84691406 13.26282227 -2.84691406 13.26282227 -4.5 13.25 C-6.13195312 13.24323242 -6.13195312 13.24323242 -7.796875 13.23632812 C-10.48963789 13.22451776 -13.18229188 13.20804778 -15.875 13.1875 C-14.11499219 1.08744628 -11.19488842 0.00702314 0 0 Z" fill="#FFFFFF" transform="translate(308.875,98.8125)"/>
+      <path d="M0 0 C1.00611328 0.02835937 2.01222656 0.05671875 3.04882812 0.0859375 C4.05107422 0.08335938 5.05332031 0.08078125 6.0859375 0.078125 C14.54572402 0.1909974 14.54572402 0.1909974 18.11132812 3.5859375 C18.54882812 6.0859375 18.54882812 6.0859375 18.11132812 8.5859375 C16.2327198 11.0907486 15.15030939 11.57294375 12.11132812 12.5859375 C10.2652228 12.66832919 8.41627649 12.69337109 6.56835938 12.68359375 C5.49521484 12.68037109 4.42207031 12.67714844 3.31640625 12.67382812 C2.19685547 12.66544922 1.07730469 12.65707031 -0.07617188 12.6484375 C-1.20732422 12.64392578 -2.33847656 12.63941406 -3.50390625 12.63476562 C-6.29888114 12.62297248 -9.09375008 12.606514 -11.88867188 12.5859375 C-10.9703367 3.21891876 -9.57267094 -0.02557828 0 0 Z" fill="#FFFFFF" transform="translate(453.888671875,98.4140625)"/>
+    </svg>
+    <div>
+      <div class="header-title">Sportstech Amazon Mockup Viewer</div>
+      <div class="header-subtitle">Mobile &amp; Desktop listing preview tool</div>
     </div>
   </div>
-</div>
+  <div class="header-right">
+    <span class="header-badge">v11</span>
+  </div>
+</header>
+
+<div class="app-body">
+
+  <!-- ── SIDEBAR ─────────────────────────────────────────────────── -->
+  <aside class="sidebar" id="sidebar">
+    <!-- Mobile drawer handle (visible only on mobile via CSS) -->
+    <div class="drawer-handle" id="drawerHandle" aria-label="Toggle content editor">
+      <span class="drawer-handle-label" id="drawerHandleLabel">Edit Content ↑</span>
+      <button class="drawer-close" id="drawerClose" aria-label="Close panel">×</button>
+    </div>
+
+    <div class="sidebar-scroll">
+
+      <!-- PRODUCT INFO -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon">
+            <i class="ti ti-text-size"></i>
+          </div>
+          <span class="section-label">Product Info</span>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="titleInput">Product title</label>
+          <textarea class="field-textarea" id="titleInput" rows="3"
+            placeholder="e.g. Sportstech 2-in-1 Vibration Plate 3D Massage…"></textarea>
+        </div>
+        <div class="field">
+          <label class="field-label" for="storeInput">Store name</label>
+          <input class="field-input" id="storeInput" type="text" placeholder="Visit the Sportstech Store">
+        </div>
+        <div class="field">
+          <label class="field-label" for="reviewsInput">Review count</label>
+          <input class="field-input" id="reviewsInput" type="text" placeholder="247">
+        </div>
+        <div class="field">
+          <label class="field-label" for="deliverInput">Delivery location</label>
+          <input class="field-input" id="deliverInput" type="text" placeholder="India">
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- PRODUCT IMAGES -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon accent">
+            <i class="ti ti-photo"></i>
+          </div>
+          <span class="section-label">Product Images</span>
+        </div>
+
+        <p class="slots-hint">
+          <i class="ti ti-info-circle"></i>
+          Click to upload · Drag to reorder
+        </p>
+
+        <div class="slot-grid" id="slotGrid"></div>
+
+        <p class="hint">
+          <i class="ti ti-hand-move"></i>
+          Swipe the phone preview left/right to cycle images.
+        </p>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- BULLET POINTS -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon">
+            <i class="ti ti-list"></i>
+          </div>
+          <span class="section-label">Bullet Points</span>
+        </div>
+
+        <div class="bullets-list" id="bulletsList"></div>
+        <button class="btn-add-bullet" id="btnAddBullet">
+          <i class="ti ti-plus"></i> Add bullet point
+        </button>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- A+ CONTENT — MOBILE (4:3) -->
+      <div class="section" id="aplusMobilePart">
+        <div class="section-header">
+          <div class="section-icon blue">
+            <i class="ti ti-layout-bottombar-expand"></i>
+          </div>
+          <span class="section-label">A+ Content — Mobile (4:3)</span>
+          <span class="warning-badge" id="warnDesktopMissing">
+            <i class="ti ti-alert-triangle"></i>Desktop A+ missing
+          </span>
+        </div>
+
+        <div class="aplus-upload-zone" id="btnAddAplusMobile">
+          <i class="ti ti-plus"></i>
+          <span>Click to add A+ module (4:3)</span>
+        </div>
+
+        <p class="hint" style="margin-top:0;margin-bottom:10px">
+          <i class="ti ti-info-circle"></i>
+          Wide banner images displayed at 4:3 ratio, flush stacked.
+        </p>
+
+        <div class="aplus-list" id="aplusMobilePanelList"></div>
+      </div>
+
+      <!-- A+ CONTENT — DESKTOP (97:30) -->
+      <div class="section" id="aplusDesktopPart" style="display:none;">
+        <div class="section-header">
+          <div class="section-icon green">
+            <i class="ti ti-layout-bottombar-expand"></i>
+          </div>
+          <span class="section-label">A+ Content — Desktop (97:30)</span>
+          <span class="warning-badge" id="warnMobileMissing">
+            <i class="ti ti-alert-triangle"></i>Mobile A+ missing
+          </span>
+        </div>
+
+        <div class="aplus-upload-zone-wide" id="btnAddAplusDesktop">
+          <i class="ti ti-plus"></i>
+          <span>Click to add A+ module (97:30)</span>
+        </div>
+
+        <p class="hint" style="margin-top:0;margin-bottom:10px">
+          <i class="ti ti-info-circle"></i>
+          Wide banner images displayed at 97:30 ratio, flush stacked.
+        </p>
+
+        <div class="aplus-list" id="aplusDesktopPanelList"></div>
+      </div>
+
+    </div><!-- /sidebar-scroll -->
+  </aside>
+
+  <!-- ── PREVIEW ─────────────────────────────────────────────────── -->
+  <main class="preview-area">
+
+    <div class="preview-toolbar">
+      <div class="preview-label">
+        <span class="preview-dot"></span>
+        Live Preview
+      </div>
+      <div class="view-toggle">
+        <button class="view-btn active" id="btnMobileView">
+          <i class="ti ti-device-mobile"></i><span class="view-btn-label">Mobile</span>
+        </button>
+        <button class="view-btn" id="btnDesktopView">
+          <i class="ti ti-device-laptop"></i><span class="view-btn-label">Desktop</span>
+        </button>
+      </div>
+      <div class="zoom-controls">
+        <button class="zoom-btn" id="zoomOut" title="Zoom out"><i class="ti ti-minus"></i></button>
+        <span class="zoom-val" id="zoomVal">75%</span>
+        <button class="zoom-btn" id="zoomIn"  title="Zoom in"><i class="ti ti-plus"></i></button>
+        <button class="zoom-btn" id="zoomReset" title="Reset zoom" style="margin-left:2px"><i class="ti ti-refresh"></i></button>
+      </div>
+    </div>
+
+    <div class="preview-canvas" id="previewCanvas">
+
+      <!-- ── MOBILE: Phone frame ── -->
+      <div class="phone-scaler" id="phoneScaler">
+        <div class="phone">
+          <div class="phone-notch">
+            <div class="notch-cam"></div>
+            <div class="notch-speaker"></div>
+            <div class="notch-cam"></div>
+          </div>
+
+          <div class="screen">
+            <div class="status-bar">
+              <span class="status-time" id="statusTime">9:41</span>
+              <div class="status-icons">
+                <i class="ti ti-wifi"></i>
+                <i class="ti ti-signal-3g"></i>
+                <i class="ti ti-battery-2"></i>
+              </div>
+            </div>
+
+            <div class="amz-topbar">
+              <i class="ti ti-menu-2" style="font-size:15px;color:#111"></i>
+              <div style="display:flex;align-items:baseline;gap:1px">
+                <span style="font-size:15px;font-weight:900;color:#111;font-family:Georgia,serif;letter-spacing:-1px">amazon</span>
+                <span style="font-size:8px;color:#f90;font-weight:900;vertical-align:super">.de</span>
+              </div>
+              <div class="top-icons">
+                <i class="ti ti-user"></i>
+                <div class="cart-wrap">
+                  <i class="ti ti-shopping-cart"></i>
+                  <span class="cart-ct">0</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="screen-scroll" id="screenScroll">
+              <div class="search-row">
+                <i class="ti ti-search"></i>
+                <span class="search-txt" id="searchTxt">Search Amazon.de</span>
+                <i class="ti ti-microphone"></i>
+              </div>
+
+              <div class="deliver-bar">
+                <i class="ti ti-map-pin"></i>
+                <span class="deliver-txt">Deliver to <span id="deliverLabel">India</span></span>
+                <i class="ti ti-chevron-down" style="font-size:10px;color:#ccc;margin-left:2px"></i>
+              </div>
+
+              <div class="store-row">
+                <span class="store-link" id="storeLabel">Visit the Sportstech Store</span>
+                <div class="rating-block">
+                  <span class="stars">★★★★½</span>
+                  <span class="review-ct" id="reviewLabel">(247)</span>
+                </div>
+              </div>
+
+              <div class="prod-title-area" id="previewTitle">
+                Sportstech 2-in-1 Vibration Plate 3D Massage &amp; Fitness at Home | VX350
+              </div>
+
+              <div class="carousel-area" id="carouselArea">
+                <div class="carousel-track" id="carouselTrack">
+                  <div class="carousel-slide">
+                    <div class="empty-slide">
+                      <i class="ti ti-photo"></i>
+                      <span>Upload images</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="below-carousel">
+                <div class="dots-row" id="dotsRow">
+                  <div class="dot active"></div>
+                </div>
+                <div class="action-icons">
+                  <i class="ti ti-heart"></i>
+                  <i class="ti ti-share"></i>
+                </div>
+              </div>
+
+              <div class="safety-block">
+                <p class="safety-title">Safety and product resources</p>
+                <p class="safety-link"><span class="bullet-amz">•</span><i class="ti ti-recycle"></i> Want to recycle your product FREE of charge?</p>
+              </div>
+
+              <hr class="aplus-divider">
+              <div class="aplus-section-header">Product Description</div>
+              <div id="aplusSection">
+                <div class="aplus-empty" id="aplusEmpty">
+                  <i class="ti ti-layout-bottombar-expand"></i>
+                  <span>Add A+ modules from the panel</span>
+                </div>
+              </div>
+
+            </div><!-- /screen-scroll -->
+
+            <div class="nav-bar">
+              <div class="nav-item active"><i class="ti ti-home"></i><span class="nav-label">Home</span></div>
+              <div class="nav-item"><i class="ti ti-search"></i><span class="nav-label">Search</span></div>
+              <div class="nav-item"><i class="ti ti-shopping-cart"></i><span class="nav-label">Cart</span></div>
+              <div class="nav-item"><i class="ti ti-list"></i><span class="nav-label">Orders</span></div>
+              <div class="nav-item"><i class="ti ti-user"></i><span class="nav-label">Account</span></div>
+            </div>
+
+          </div><!-- /screen -->
+        </div><!-- /phone -->
+      </div><!-- /phone-scaler -->
+
+      <!-- ── DESKTOP: Browser frame ── -->
+      <div class="phone-scaler" id="desktopScaler" style="display:none;">
+        <div class="browser-frame" id="browserFrame" style="display:flex;">
+
+          <!-- Tab strip -->
+          <div class="browser-tabs">
+            <div class="browser-tab active">
+              <div class="browser-tab-favicon">a</div>
+              <span class="browser-tab-title" id="desktopTabTitle">Sportstech VX350 — amazon.de</span>
+              <span class="browser-tab-close">✕</span>
+            </div>
+            <div class="browser-tab" style="opacity:.5">
+              <div class="browser-tab-favicon" style="background:#888">+</div>
+              <span class="browser-tab-title">New Tab</span>
+            </div>
+          </div>
+
+          <!-- Chrome bar -->
+          <div class="browser-chrome">
+            <div class="traffic-lights">
+              <div class="tl tl-red"></div>
+              <div class="tl tl-yellow"></div>
+              <div class="tl tl-green"></div>
+            </div>
+            <div class="browser-nav-btns">
+              <button class="browser-nav-btn"><i class="ti ti-arrow-left"></i></button>
+              <button class="browser-nav-btn"><i class="ti ti-arrow-right"></i></button>
+              <button class="browser-nav-btn"><i class="ti ti-refresh"></i></button>
+            </div>
+            <div class="url-bar">
+              <i class="ti ti-lock"></i>
+              <span class="url-text"><span class="url-domain">amazon.de</span>/sportstech/vx350</span>
+            </div>
+            <div class="browser-toolbar-icons">
+              <i class="ti ti-star" style="font-size:16px;color:#888;"></i>
+              <i class="ti ti-dots" style="font-size:16px;color:#888;"></i>
+            </div>
+          </div>
+
+          <!-- Amazon navbar -->
+          <div class="amz-desktop-nav">
+            <div class="amz-logo-desktop">
+              <span>amazon</span><span class="tld">.de</span>
+            </div>
+            <div style="font-size:9px;color:#ccc;white-space:nowrap;margin-right:2px;">Deliver to<br><strong style="color:#fff;font-size:11px;">India</strong></div>
+            <div class="amz-search-desktop">
+              <div class="amz-search-category">All <i class="ti ti-chevron-down" style="font-size:9px;margin-left:3px;"></i></div>
+              <div class="amz-search-input" id="desktopSearchTxt" style="font-size:12px;color:#999;">Search Amazon.de</div>
+              <div class="amz-search-btn"><i class="ti ti-search"></i></div>
+            </div>
+            <div class="amz-nav-right">
+              <div class="amz-nav-icon">
+                <span>Hello, sign in</span>
+                <strong>Account &amp; Lists</strong>
+              </div>
+              <div class="amz-nav-icon">
+                <span>Returns</span>
+                <strong>&amp; Orders</strong>
+              </div>
+              <div class="amz-nav-icon amz-cart-wrap">
+                <i class="ti ti-shopping-cart"></i>
+                <span class="amz-cart-count">0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Secondary nav -->
+          <div class="amz-secondary-nav">
+            <span class="amz-nav-link amz-all"><i class="ti ti-menu-2"></i> All</span>
+            <span class="amz-nav-link">Today's Deals</span>
+            <span class="amz-nav-link">Customer Service</span>
+            <span class="amz-nav-link">Registry</span>
+            <span class="amz-nav-link">Gift Cards</span>
+            <span class="amz-nav-link">Sell</span>
+            <span class="amz-nav-link">Sports &amp; Outdoors</span>
+            <span class="amz-nav-link">Fitness</span>
+            <span class="amz-nav-link">Vibration Plates</span>
+          </div>
+
+          <!-- Page content -->
+          <div class="desktop-page">
+            <div class="desktop-content">
+
+              <!-- Breadcrumb -->
+              <div class="breadcrumb">
+                <a href="#" style="color:#007185;text-decoration:none;">Sports &amp; Outdoors</a>
+                <span class="sep">›</span>
+                <a href="#" style="color:#007185;text-decoration:none;">Fitness</a>
+                <span class="sep">›</span>
+                <a href="#" style="color:#007185;text-decoration:none;">Vibration Plates</a>
+                <span class="sep">›</span>
+                <span>VX350</span>
+              </div>
+
+              <!-- 4-column product section -->
+              <div class="product-section">
+
+                <!-- LEFT: Thumbnail strip -->
+                <div class="thumb-strip" id="desktopThumbStrip">
+                  <!-- populated by JS -->
+                </div>
+
+                <!-- MIDDLE: Main image -->
+                <div class="main-img-area">
+                  <div class="main-img-display" id="desktopMainImg">
+                    <div class="main-img-empty">
+                      <i class="ti ti-photo"></i>
+                      <span>Upload product images</span>
+                    </div>
+                  </div>
+                  <div class="main-img-hint">Click to see full view &nbsp;›</div>
+                </div>
+
+                <!-- RIGHT-MIDDLE: Product info -->
+                <div class="product-info-desktop">
+                  <div class="desktop-store-link" id="desktopStoreLink">Visit the Sportstech Store</div>
+                  <div class="desktop-title" id="desktopTitle">Sportstech 2-in-1 Vibration Plate 3D Massage &amp; Fitness at Home | VX350</div>
+                  <div class="desktop-rating-row">
+                    <span class="desktop-stars">★★★★½</span>
+                    <span class="desktop-review-count" id="desktopReviewCount">(247)</span>
+                  </div>
+                  <hr class="desktop-divider">
+                  <div class="desktop-deliver">
+                    <strong>FREE Delivery</strong> — <span id="desktopDeliver">India</span>
+                  </div>
+                  <table class="desktop-specs-table">
+                    <tr><td>Material</td><td>Polypropylene</td></tr>
+                    <tr><td>Brand</td><td>Sportstech</td></tr>
+                    <tr><td>Colour</td><td>Black</td></tr>
+                    <tr><td>Model name</td><td>VX350</td></tr>
+                    <tr><td>Item weight</td><td>10 kg</td></tr>
+                  </table>
+                  <ul class="desktop-bullets" id="desktopBullets">
+                    <li>3D vibration for full-body training</li>
+                    <li>Integrated massage rollers</li>
+                    <li>6 pre-set programmes + 99 speed levels</li>
+                    <li>LCD display with Bluetooth speaker</li>
+                    <li>Suitable for home &amp; gym use</li>
+                  </ul>
+                </div>
+
+                <!-- FAR RIGHT: Buy box -->
+                <div class="buy-box">
+                  <div class="buy-box-no-offer">No featured offers available</div>
+                  <div class="buy-box-sub" style="font-size:12px;color:#565959;margin-bottom:10px;">
+                    See all buying options for this product
+                  </div>
+                  <hr class="buy-box-divider">
+                  <button class="buy-box-btn">See Similar Items</button>
+                  <button class="buy-box-btn-outline" style="margin-top:6px;">Add to List</button>
+                  <hr class="buy-box-divider">
+                  <div class="buy-box-meta">
+                    <strong>Ships from</strong> Sportstech<br>
+                    <strong>Sold by</strong> Sportstech<br>
+                    <strong>Returns</strong> Eligible for Return<br>
+                    <strong>Payment</strong> Secure transaction
+                  </div>
+                </div>
+
+              </div><!-- /product-section -->
+
+              <!-- BELOW FOLD -->
+              <div class="below-fold">
+
+                <!-- From the brand -->
+                <div class="from-brand-section">
+                  <div class="from-brand-heading">From the brand</div>
+                  <div class="brand-carousel-hint">
+                    <i class="ti ti-photo" style="font-size:16px;"></i>
+                    Brand story carousel — upload Desktop A+ images below to preview
+                  </div>
+                </div>
+
+                <!-- Product description heading -->
+                <div class="product-desc-heading">Product Description</div>
+
+                <!-- Desktop A+ modules: 97:30 flush stacked -->
+                <div id="desktopAplusSection">
+                  <div class="desktop-aplus-empty" id="desktopAplusEmpty">
+                    <i class="ti ti-layout-bottombar-expand"></i>
+                    <span>Add Desktop A+ modules from the panel (97:30 ratio)</span>
+                  </div>
+                </div>
+
+              </div><!-- /below-fold -->
+
+            </div><!-- /desktop-content -->
+          </div><!-- /desktop-page -->
+
+        </div><!-- /browser-frame -->
+      </div><!-- /desktopScaler -->
+
+    </div><!-- /preview-canvas -->
+  </main>
+</div><!-- /app-body -->
+
+<!-- Mobile drawer backdrop -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
 
 <script>
-const SLOTS = 9;
-const images = new Array(SLOTS).fill(null);
-let cur = 0;
+/* ─── State ─────────────────────────────────────────────────────── */
+const SLOTS   = 9;
+const images  = new Array(SLOTS).fill(null);
+let cur       = 0;
+let zoomLevel = 75;
+let dragSrcIdx= null;
+let viewMode  = 'mobile'; // 'mobile' | 'desktop'
+let desktopCur = 0;
 
-const slotGrid = document.getElementById('slotGrid');
-const carouselTrack = document.getElementById('carouselTrack');
-const dotsRow = document.getElementById('dotsRow');
-const previewTitle = document.getElementById('previewTitle');
-const titleInput = document.getElementById('titleInput');
-const carouselArea = document.getElementById('carouselArea');
-const searchTxt = document.getElementById('searchTxt');
+const aplusMobileModules  = [];
+const aplusDesktopModules = [];
 
+const bulletPoints = [];
+
+/* ─── Refs ──────────────────────────────────────────────────────── */
+const slotGrid           = document.getElementById('slotGrid');
+const carouselTrack      = document.getElementById('carouselTrack');
+const dotsRow            = document.getElementById('dotsRow');
+const previewTitle       = document.getElementById('previewTitle');
+const titleInput         = document.getElementById('titleInput');
+const storeInput         = document.getElementById('storeInput');
+const reviewsInput       = document.getElementById('reviewsInput');
+const deliverInput       = document.getElementById('deliverInput');
+const carouselArea       = document.getElementById('carouselArea');
+const searchTxt          = document.getElementById('searchTxt');
+const storeLabel         = document.getElementById('storeLabel');
+const reviewLabel        = document.getElementById('reviewLabel');
+const deliverLabel       = document.getElementById('deliverLabel');
+const phoneScaler        = document.getElementById('phoneScaler');
+const desktopScaler      = document.getElementById('desktopScaler');
+const zoomVal            = document.getElementById('zoomVal');
+const statusTime         = document.getElementById('statusTime');
+const aplusSection       = document.getElementById('aplusSection');
+const aplusEmpty         = document.getElementById('aplusEmpty');
+const btnAddAplusMobile  = document.getElementById('btnAddAplusMobile');
+const btnAddAplusDesktop = document.getElementById('btnAddAplusDesktop');
+const aplusMobilePanelList  = document.getElementById('aplusMobilePanelList');
+const aplusDesktopPanelList = document.getElementById('aplusDesktopPanelList');
+const aplusMobilePart    = document.getElementById('aplusMobilePart');
+const aplusDesktopPart   = document.getElementById('aplusDesktopPart');
+const desktopAplusSection= document.getElementById('desktopAplusSection');
+const desktopAplusEmpty  = document.getElementById('desktopAplusEmpty');
+const btnMobileView      = document.getElementById('btnMobileView');
+const btnDesktopView     = document.getElementById('btnDesktopView');
+const warnDesktopMissing = document.getElementById('warnDesktopMissing');
+const warnMobileMissing  = document.getElementById('warnMobileMissing');
+const bulletsList        = document.getElementById('bulletsList');
+const btnAddBullet       = document.getElementById('btnAddBullet');
+const desktopBullets     = document.getElementById('desktopBullets');
+const desktopTitle       = document.getElementById('desktopTitle');
+const desktopStoreLink   = document.getElementById('desktopStoreLink');
+const desktopReviewCount = document.getElementById('desktopReviewCount');
+const desktopDeliver     = document.getElementById('desktopDeliver');
+const desktopThumbStrip  = document.getElementById('desktopThumbStrip');
+const desktopMainImg     = document.getElementById('desktopMainImg');
+const desktopSearchTxt   = document.getElementById('desktopSearchTxt');
+const desktopTabTitle    = document.getElementById('desktopTabTitle');
+
+/* ─── Clock ─────────────────────────────────────────────────────── */
+function updateClock() {
+  const now = new Date();
+  statusTime.textContent =
+    String(now.getHours()).padStart(2,'0') + ':' +
+    String(now.getMinutes()).padStart(2,'0');
+}
+updateClock();
+setInterval(updateClock, 10000);
+
+/* ─── Zoom ──────────────────────────────────────────────────────── */
+function applyZoom() {
+  const scaler = viewMode === 'mobile' ? phoneScaler : desktopScaler;
+  scaler.style.transform = `scale(${zoomLevel / 100})`;
+  zoomVal.textContent = zoomLevel + '%';
+}
+applyZoom();
+document.getElementById('zoomIn').addEventListener('click', () => {
+  if (zoomLevel < 100) { zoomLevel = Math.min(100, zoomLevel + 5); applyZoom(); }
+});
+document.getElementById('zoomOut').addEventListener('click', () => {
+  if (zoomLevel > 30) { zoomLevel = Math.max(30, zoomLevel - 5); applyZoom(); }
+});
+document.getElementById('zoomReset').addEventListener('click', () => {
+  zoomLevel = viewMode === 'mobile' ? 75 : 55;
+  applyZoom();
+});
+
+/* ─── View Mode Switch ───────────────────────────────────────────── */
+function switchView(mode) {
+  viewMode = mode;
+  if (mode === 'mobile') {
+    phoneScaler.style.display   = '';
+    desktopScaler.style.display = 'none';
+    btnMobileView.classList.add('active');
+    btnDesktopView.classList.remove('active');
+    aplusMobilePart.style.display  = 'block';
+    aplusDesktopPart.style.display = 'none';
+    zoomLevel = 75;
+  } else {
+    phoneScaler.style.display   = 'none';
+    desktopScaler.style.display = '';
+    btnDesktopView.classList.add('active');
+    btnMobileView.classList.remove('active');
+    aplusMobilePart.style.display  = 'none';
+    aplusDesktopPart.style.display = 'block';
+    zoomLevel = 55;
+  }
+  applyZoom();
+  updateWarnings();
+}
+
+btnMobileView.addEventListener('click',  () => switchView('mobile'));
+btnDesktopView.addEventListener('click', () => switchView('desktop'));
+
+/* ─── Warning badges ─────────────────────────────────────────────── */
+function updateWarnings() {
+  const hasMobile  = aplusMobileModules.length > 0;
+  const hasDesktop = aplusDesktopModules.length > 0;
+  // Desktop missing badge (shown when mobile has images but desktop is empty)
+  warnDesktopMissing.classList.toggle('visible', hasMobile && !hasDesktop);
+  // Mobile missing badge (shown when desktop has images but mobile is empty)
+  warnMobileMissing.classList.toggle('visible', hasDesktop && !hasMobile);
+}
+
+/* ─── Live form updates ─────────────────────────────────────────── */
+titleInput.addEventListener('input', () => {
+  const v = titleInput.value.trim();
+  previewTitle.textContent = v || 'Your product title will appear here.';
+  desktopTitle.textContent = v || 'Sportstech 2-in-1 Vibration Plate 3D Massage & Fitness at Home | VX350';
+  searchTxt.textContent    = v || 'Search Amazon.de';
+  desktopSearchTxt.textContent = v || 'Search Amazon.de';
+  desktopTabTitle.textContent  = v ? (v.substring(0, 35) + (v.length > 35 ? '…' : '') + ' — amazon.de') : 'Sportstech VX350 — amazon.de';
+});
+storeInput.addEventListener('input', () => {
+  const v = storeInput.value.trim();
+  storeLabel.textContent       = v || 'Visit the Sportstech Store';
+  desktopStoreLink.textContent = v || 'Visit the Sportstech Store';
+});
+reviewsInput.addEventListener('input', () => {
+  const v = reviewsInput.value.trim();
+  reviewLabel.textContent      = v ? `(${v})` : '(247)';
+  desktopReviewCount.textContent = v ? `(${v})` : '(247)';
+});
+deliverInput.addEventListener('input', () => {
+  const v = deliverInput.value.trim();
+  deliverLabel.textContent = v || 'India';
+  desktopDeliver.textContent = v || 'India';
+});
+
+/* ─── Bullets ────────────────────────────────────────────────────── */
+function buildBullets() {
+  bulletsList.innerHTML = '';
+  bulletPoints.forEach((b, idx) => {
+    const row = document.createElement('div'); row.className = 'bullet-row';
+    const inp = document.createElement('input');
+    inp.type = 'text'; inp.value = b;
+    inp.placeholder = 'Bullet point text…';
+    inp.oninput = () => { bulletPoints[idx] = inp.value; syncDesktopBullets(); };
+    const del = document.createElement('button');
+    del.className = 'bullet-del';
+    del.innerHTML = '<i class="ti ti-x"></i>';
+    del.onclick = () => { bulletPoints.splice(idx, 1); buildBullets(); syncDesktopBullets(); };
+    row.appendChild(inp); row.appendChild(del);
+    bulletsList.appendChild(row);
+  });
+}
+
+function syncDesktopBullets() {
+  desktopBullets.innerHTML = '';
+  const defaults = ['3D vibration for full-body training','Integrated massage rollers','6 pre-set programmes + 99 speed levels','LCD display with Bluetooth speaker','Suitable for home & gym use'];
+  const list = bulletPoints.length ? bulletPoints : defaults;
+  list.forEach(b => {
+    if (!b.trim()) return;
+    const li = document.createElement('li'); li.textContent = b;
+    desktopBullets.appendChild(li);
+  });
+}
+
+btnAddBullet.addEventListener('click', () => {
+  bulletPoints.push('');
+  buildBullets();
+});
+
+buildBullets();
+syncDesktopBullets();
+
+/* ─── Slots ─────────────────────────────────────────────────────── */
 function buildSlots() {
   slotGrid.innerHTML = '';
   for (let i = 0; i < SLOTS; i++) {
     const s = document.createElement('div');
     s.className = 'slot' + (images[i] ? ' has-img' : '');
+
     if (images[i]) {
-      const im = document.createElement('img'); im.src = images[i]; s.appendChild(im);
+      const im = document.createElement('img');
+      im.src = images[i]; im.draggable = false; s.appendChild(im);
+
       if (i === 0) {
-        const b = document.createElement('span'); b.className = 'main-badge'; b.textContent = 'Main'; s.appendChild(b);
+        const b = document.createElement('span');
+        b.className = 'main-badge'; b.textContent = 'MAIN'; s.appendChild(b);
       }
-      const rm = document.createElement('button'); rm.className = 'slot-remove';
+
+      const rm = document.createElement('button');
+      rm.className = 'slot-remove';
       rm.innerHTML = '<i class="ti ti-x"></i>';
-      rm.onclick = e => { e.stopPropagation(); images[i] = null; buildSlots(); buildCarousel(); };
+      rm.onclick = e => { e.stopPropagation(); images[i] = null; buildSlots(); buildCarousel(); buildDesktopThumbs(); };
       s.appendChild(rm);
+
+      const dh = document.createElement('div');
+      dh.className = 'drag-handle';
+      dh.innerHTML = '<i class="ti ti-grip-vertical"></i>';
+      s.appendChild(dh);
+
+      s.draggable = true;
+      s.addEventListener('dragstart', e => {
+        dragSrcIdx = i;
+        s.classList.add('dragging-src');
+        e.dataTransfer.effectAllowed = 'move';
+        const g = document.createElement('canvas'); g.width = 1; g.height = 1;
+        e.dataTransfer.setDragImage(g, 0, 0);
+      });
+      s.addEventListener('dragend', () => {
+        s.classList.remove('dragging-src');
+        document.querySelectorAll('.slot').forEach(el => el.classList.remove('drag-over'));
+        dragSrcIdx = null;
+      });
     } else {
       const ic = document.createElement('i'); ic.className = 'ti ti-plus slot-icon';
-      const n = document.createElement('span'); n.className = 'slot-num'; n.textContent = 'Slot ' + (i + 1);
+      const n  = document.createElement('span'); n.className = 'slot-num'; n.textContent = i + 1;
       s.appendChild(ic); s.appendChild(n);
     }
+
     s.addEventListener('click', () => triggerUpload(i));
-    s.addEventListener('dragover', e => { e.preventDefault(); s.style.borderColor = '#666'; });
-    s.addEventListener('dragleave', () => { s.style.borderColor = ''; });
-    s.addEventListener('drop', e => { e.preventDefault(); s.style.borderColor = ''; handleFile(i, e.dataTransfer.files[0]); });
+    s.addEventListener('dragover', e => {
+      e.preventDefault();
+      if (dragSrcIdx !== null && dragSrcIdx !== i) s.classList.add('drag-over');
+      e.dataTransfer.dropEffect = 'move';
+    });
+    s.addEventListener('dragleave', () => s.classList.remove('drag-over'));
+    s.addEventListener('drop', e => {
+      e.preventDefault(); s.classList.remove('drag-over');
+      if (dragSrcIdx !== null && dragSrcIdx !== i) {
+        [images[dragSrcIdx], images[i]] = [images[i], images[dragSrcIdx]];
+        dragSrcIdx = null; buildSlots(); buildCarousel(); buildDesktopThumbs();
+      } else if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        handleFile(i, e.dataTransfer.files[0]);
+      }
+    });
+
     slotGrid.appendChild(s);
   }
 }
 
 function triggerUpload(i) {
-  const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*';
+  const inp = document.createElement('input');
+  inp.type = 'file'; inp.accept = 'image/*';
   inp.onchange = () => { if (inp.files[0]) handleFile(i, inp.files[0]); };
   inp.click();
 }
@@ -232,18 +2640,15 @@ function triggerUpload(i) {
 function handleFile(i, file) {
   if (!file || !file.type.startsWith('image/')) return;
   const r = new FileReader();
-  r.onload = e => {
-    images[i] = e.target.result;
-    buildSlots();
-    buildCarousel();
-    if (i === 0) { searchTxt.textContent = titleInput.value.trim() || 'vx350 vibrationsplatte'; }
-  };
+  r.onload = e => { images[i] = e.target.result; buildSlots(); buildCarousel(); buildDesktopThumbs(); };
   r.readAsDataURL(file);
 }
 
+/* ─── Mobile Carousel ───────────────────────────────────────────── */
 function buildCarousel() {
   carouselTrack.innerHTML = ''; dotsRow.innerHTML = '';
   const filled = images.filter(Boolean);
+
   if (!filled.length) {
     const sl = document.createElement('div'); sl.className = 'carousel-slide';
     sl.innerHTML = '<div class="empty-slide"><i class="ti ti-photo"></i><span>Upload images</span></div>';
@@ -251,13 +2656,16 @@ function buildCarousel() {
     const d = document.createElement('div'); d.className = 'dot active'; dotsRow.appendChild(d);
     return;
   }
+
   filled.forEach((src, idx) => {
     const sl = document.createElement('div'); sl.className = 'carousel-slide';
-    const im = document.createElement('img'); im.src = src; im.alt = 'Product image ' + (idx + 1);
+    const im = document.createElement('img'); im.src = src; im.alt = 'Product ' + (idx + 1);
     sl.appendChild(im); carouselTrack.appendChild(sl);
-    const d = document.createElement('div'); d.className = 'dot' + (idx === cur ? ' active' : '');
+    const d = document.createElement('div');
+    d.className = 'dot' + (idx === cur ? ' active' : '');
     d.onclick = () => goTo(idx); dotsRow.appendChild(d);
   });
+
   if (cur >= filled.length) cur = 0;
   updateCarousel();
 }
@@ -267,17 +2675,17 @@ function goTo(idx) {
   cur = Math.max(0, Math.min(idx, filled.length - 1));
   updateCarousel();
 }
-
 function updateCarousel() {
-  carouselTrack.style.transform = 'translateX(-' + (cur * 100) + '%)';
+  carouselTrack.style.transform = `translateX(-${cur * 100}%)`;
   document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === cur));
 }
 
+/* mouse drag swipe */
 let dragX = null;
 carouselArea.addEventListener('mousedown', e => { dragX = e.clientX; carouselTrack.classList.add('dragging'); });
 window.addEventListener('mousemove', e => {
   if (dragX === null) return;
-  carouselTrack.style.transform = 'translateX(calc(-' + (cur * 100) + '% + ' + (e.clientX - dragX) + 'px))';
+  carouselTrack.style.transform = `translateX(calc(-${cur * 100}% + ${e.clientX - dragX}px))`;
 });
 window.addEventListener('mouseup', e => {
   if (dragX === null) return;
@@ -286,10 +2694,10 @@ window.addEventListener('mouseup', e => {
   const filled = images.filter(Boolean);
   if (diff < -40 && cur < filled.length - 1) cur++;
   else if (diff > 40 && cur > 0) cur--;
-  dragX = null;
-  updateCarousel();
+  dragX = null; updateCarousel();
 });
 
+/* touch swipe */
 let tX = null;
 carouselArea.addEventListener('touchstart', e => { tX = e.touches[0].clientX; }, { passive: true });
 carouselArea.addEventListener('touchend', e => {
@@ -298,19 +2706,272 @@ carouselArea.addEventListener('touchend', e => {
   const filled = images.filter(Boolean);
   if (diff < -40 && cur < filled.length - 1) cur++;
   else if (diff > 40 && cur > 0) cur--;
-  tX = null;
-  updateCarousel();
+  tX = null; updateCarousel();
 }, { passive: true });
 
-titleInput.addEventListener('input', () => {
-  const v = titleInput.value.trim();
-  previewTitle.textContent = v || 'Your product title will appear here.';
-  searchTxt.textContent = v || 'vx350 vibrationsplatte';
+/* ─── Desktop Thumbnails & Main Image ───────────────────────────── */
+function buildDesktopThumbs() {
+  desktopThumbStrip.innerHTML = '';
+  const filled = images.filter(Boolean);
+
+  if (!filled.length) {
+    // Empty placeholders
+    for (let i = 0; i < 5; i++) {
+      const el = document.createElement('div');
+      el.className = 'thumb-item-empty';
+      el.innerHTML = '<i class="ti ti-photo"></i>';
+      desktopThumbStrip.appendChild(el);
+    }
+    // Clear main img
+    desktopMainImg.innerHTML = '<div class="main-img-empty"><i class="ti ti-photo"></i><span>Upload product images</span></div>';
+    desktopCur = 0;
+    return;
+  }
+
+  filled.forEach((src, idx) => {
+    const el = document.createElement('div');
+    el.className = 'thumb-item' + (idx === desktopCur ? ' active' : '');
+    const img = document.createElement('img'); img.src = src; img.alt = '';
+    el.appendChild(img);
+    el.addEventListener('click', () => { desktopCur = idx; buildDesktopThumbs(); });
+    desktopThumbStrip.appendChild(el);
+  });
+
+  // Fill remaining slots if < 5
+  for (let i = filled.length; i < 5; i++) {
+    const el = document.createElement('div');
+    el.className = 'thumb-item-empty';
+    el.innerHTML = '<i class="ti ti-photo"></i>';
+    desktopThumbStrip.appendChild(el);
+  }
+
+  if (desktopCur >= filled.length) desktopCur = 0;
+  // Main image
+  desktopMainImg.innerHTML = '';
+  const mainImg = document.createElement('img');
+  mainImg.src = filled[desktopCur]; mainImg.alt = 'Main product image';
+  desktopMainImg.appendChild(mainImg);
+}
+
+/* ─── Mobile A+ Content ─────────────────────────────────────────── */
+btnAddAplusMobile.addEventListener('click', () => {
+  const inp = document.createElement('input');
+  inp.type = 'file'; inp.accept = 'image/*';
+  inp.onchange = () => {
+    const file = inp.files[0];
+    if (!file || !file.type.startsWith('image/')) return;
+    const r = new FileReader();
+    r.onload = ev => {
+      aplusMobileModules.push({ src: ev.target.result, name: file.name });
+      renderMobileAplus();
+      updateWarnings();
+    };
+    r.readAsDataURL(file);
+  };
+  inp.click();
 });
 
+function removeMobileAplus(idx) { aplusMobileModules.splice(idx, 1); renderMobileAplus(); updateWarnings(); }
+
+function renderMobileAplus() {
+  /* ── phone preview ── */
+  Array.from(aplusSection.children).forEach(el => { if (el !== aplusEmpty) el.remove(); });
+
+  if (!aplusMobileModules.length) {
+    aplusEmpty.style.display = 'flex';
+  } else {
+    aplusEmpty.style.display = 'none';
+    aplusMobileModules.forEach((m, idx) => {
+      const wrap = document.createElement('div'); wrap.className = 'aplus-module';
+      const img  = document.createElement('img');
+      img.src = m.src; img.alt = 'A+ ' + (idx + 1); img.draggable = false;
+      wrap.appendChild(img);
+      const rm = document.createElement('button');
+      rm.className = 'aplus-module-remove'; rm.title = 'Remove';
+      rm.innerHTML = '<i class="ti ti-x"></i>'; rm.onclick = () => removeMobileAplus(idx);
+      wrap.appendChild(rm);
+      aplusSection.appendChild(wrap);
+    });
+  }
+
+  /* ── sidebar list ── */
+  aplusMobilePanelList.innerHTML = '';
+  aplusMobileModules.forEach((m, idx) => {
+    const item  = document.createElement('div'); item.className = 'aplus-item';
+    const tw    = document.createElement('div'); tw.className = 'aplus-item-thumb';
+    const thumb = document.createElement('img'); thumb.src = m.src; thumb.alt = '';
+    tw.appendChild(thumb);
+    const label = document.createElement('span'); label.className = 'aplus-item-name';
+    label.textContent = 'Module ' + (idx + 1) + ' — ' + m.name.replace(/\.[^.]+$/, '');
+    const del   = document.createElement('button');
+    del.title   = 'Remove'; del.innerHTML = '<i class="ti ti-trash"></i>';
+    del.onclick = () => removeMobileAplus(idx);
+    item.appendChild(tw); item.appendChild(label); item.appendChild(del);
+    aplusMobilePanelList.appendChild(item);
+  });
+}
+
+/* ─── Desktop A+ Content ─────────────────────────────────────────── */
+btnAddAplusDesktop.addEventListener('click', () => {
+  const inp = document.createElement('input');
+  inp.type = 'file'; inp.accept = 'image/*';
+  inp.onchange = () => {
+    const file = inp.files[0];
+    if (!file || !file.type.startsWith('image/')) return;
+    const r = new FileReader();
+    r.onload = ev => {
+      aplusDesktopModules.push({ src: ev.target.result, name: file.name });
+      renderDesktopAplus();
+      updateWarnings();
+    };
+    r.readAsDataURL(file);
+  };
+  inp.click();
+});
+
+function removeDesktopAplus(idx) { aplusDesktopModules.splice(idx, 1); renderDesktopAplus(); updateWarnings(); }
+
+function renderDesktopAplus() {
+  /* ── desktop preview ── */
+  Array.from(desktopAplusSection.children).forEach(el => { if (el !== desktopAplusEmpty) el.remove(); });
+
+  if (!aplusDesktopModules.length) {
+    desktopAplusEmpty.style.display = 'flex';
+  } else {
+    desktopAplusEmpty.style.display = 'none';
+    aplusDesktopModules.forEach((m, idx) => {
+      const wrap = document.createElement('div'); wrap.className = 'desktop-aplus-module';
+      const img  = document.createElement('img');
+      img.src = m.src; img.alt = 'Desktop A+ ' + (idx + 1); img.draggable = false;
+      wrap.appendChild(img);
+      const rm = document.createElement('button');
+      rm.className = 'desktop-aplus-remove'; rm.title = 'Remove';
+      rm.innerHTML = '<i class="ti ti-x"></i>'; rm.onclick = () => removeDesktopAplus(idx);
+      wrap.appendChild(rm);
+      desktopAplusSection.appendChild(wrap);
+    });
+  }
+
+  /* ── sidebar list ── */
+  aplusDesktopPanelList.innerHTML = '';
+  aplusDesktopModules.forEach((m, idx) => {
+    const item  = document.createElement('div'); item.className = 'aplus-item';
+    const tw    = document.createElement('div'); tw.className = 'aplus-item-thumb-wide';
+    const thumb = document.createElement('img'); thumb.src = m.src; thumb.alt = '';
+    tw.appendChild(thumb);
+    const label = document.createElement('span'); label.className = 'aplus-item-name';
+    label.textContent = 'Banner ' + (idx + 1) + ' — ' + m.name.replace(/\.[^.]+$/, '');
+    const del   = document.createElement('button');
+    del.title   = 'Remove'; del.innerHTML = '<i class="ti ti-trash"></i>';
+    del.onclick = () => removeDesktopAplus(idx);
+    item.appendChild(tw); item.appendChild(label); item.appendChild(del);
+    aplusDesktopPanelList.appendChild(item);
+  });
+}
+
+/* ─── Init ──────────────────────────────────────────────────────── */
 buildSlots();
 buildCarousel();
-</script>
+buildDesktopThumbs();
 
+/* ════════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE — DRAWER + PHONE SCALE + TOUCH DRAG DISABLE
+   ════════════════════════════════════════════════════════════════ */
+
+/* ─── Mobile detection helper ─── */
+function isMobileLayout() {
+  return window.innerWidth <= 768;
+}
+
+/* ─── Drawer state ─── */
+const sidebar         = document.getElementById('sidebar');
+const drawerHandle    = document.getElementById('drawerHandle');
+const drawerClose     = document.getElementById('drawerClose');
+const drawerBackdrop  = document.getElementById('drawerBackdrop');
+const drawerHandleLabel = document.getElementById('drawerHandleLabel');
+let drawerOpen = false;
+
+function openDrawer() {
+  if (!drawerOpen) {
+    drawerOpen = true;
+    sidebar.classList.add('drawer-open');
+    drawerBackdrop.classList.add('visible');
+    drawerHandleLabel.textContent = 'Edit Content ↓';
+  }
+}
+
+function closeDrawer() {
+  if (drawerOpen) {
+    drawerOpen = false;
+    sidebar.classList.remove('drawer-open');
+    drawerBackdrop.classList.remove('visible');
+    drawerHandleLabel.textContent = 'Edit Content ↑';
+  }
+}
+
+drawerHandle.addEventListener('click', () => {
+  if (!isMobileLayout()) return;
+  if (drawerOpen) closeDrawer(); else openDrawer();
+});
+
+drawerClose.addEventListener('click', (e) => {
+  e.stopPropagation();
+  closeDrawer();
+});
+
+drawerBackdrop.addEventListener('click', closeDrawer);
+
+/* ─── Auto-scale phone frame to fit mobile viewport ─── */
+function autoScalePhone() {
+  if (!isMobileLayout()) {
+    // Reset any auto-scale on desktop (zoom JS takes over)
+    phoneScaler.style.transform = '';
+    applyZoom();
+    return;
+  }
+
+  // Available width = window width minus padding (2×8px)
+  const availW = window.innerWidth - 16;
+  const phoneW = 390; // phone frame width in CSS px
+  const scale  = Math.min(1, availW / phoneW);
+
+  // Apply directly (override zoom on mobile)
+  phoneScaler.style.transform        = `scale(${scale})`;
+  phoneScaler.style.transformOrigin  = 'top center';
+
+  // Shrink the canvas height so it just fits the scaled phone + padding
+  // Phone is 844px tall; canvas is inside preview-area which is flex:1
+  // We just let the canvas scroll naturally
+}
+
+// Run on load and on resize
+autoScalePhone();
+window.addEventListener('resize', () => {
+  autoScalePhone();
+  if (!isMobileLayout() && drawerOpen) {
+    // If user rotates to landscape beyond 768px, close drawer
+    closeDrawer();
+  }
+});
+
+/* ─── Disable drag-to-reorder on touch devices ─── */
+// The existing buildSlots() sets draggable="true" on slots that have images.
+// On touch we strip draggable so the browser never initiates a drag.
+function disableDragOnTouch() {
+  if (!isMobileLayout()) return;
+  document.querySelectorAll('.slot[draggable="true"]').forEach(s => {
+    s.removeAttribute('draggable');
+  });
+}
+
+// Patch buildSlots to call disableDragOnTouch after it runs
+const _origBuildSlots = buildSlots;
+// We already called buildSlots above; re-hook via MutationObserver on slotGrid
+const _slotObserver = new MutationObserver(() => disableDragOnTouch());
+_slotObserver.observe(slotGrid, { childList: true });
+// Also disable on initial load
+disableDragOnTouch();
+</script>
 </body>
 </html>
+
